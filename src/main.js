@@ -11,10 +11,12 @@ import App from './App.vue'
 
 import Home from './components/Home.vue'
 import Sample from './components/Employee_Detail.vue'
+import JobListing from './components/JobListing.vue'
 
 const routes = [
     {path:'/',component:Home},
-    {path:'/sample/:id',component:(Sample)},
+    {path:'/sample/:id',component:Sample},
+    {path:'/jobs/',component:JobListing},
 
 ]
 const router = createRouter({

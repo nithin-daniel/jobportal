@@ -10,7 +10,7 @@
                             <!--Logo start-->
                             <div class="col-xl-2 col-lg-2 col-12">
                                 <div class="logo">
-                                    <a href="/"><img src="../src/assets/images/logo-white.png" alt=""></a>
+                                    <a href="/"><img src="../assets/images/logo-white.png" alt=""></a>
                                 </div>
                             </div>
                             <!--Logo end-->
@@ -22,7 +22,7 @@
                                         <li><a href="/">Home <small class="icon-arrow"></small></a>
 
                                         </li>
-                                        <li><a href="job-listing.html"><span class="label-status hot"></span>Jobs <small
+                                        <li><a href="/jobs"><span class="label-status hot"></span>Jobs <small
                                                     class="icon-arrow"></small></a>
                                         </li>
                                         <li><a href="candidates-listing.html"><span class="label-status new"></span>
