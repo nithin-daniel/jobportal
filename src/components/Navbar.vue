@@ -10,7 +10,7 @@
                             <!--Logo start-->
                             <div class="col-xl-2 col-lg-2 col-12">
                                 <div class="logo">
-                                    <a href="index.html"><img src="../src/assets/images/logo-white.png" alt=""></a>
+                                    <a href="/"><img src="../src/assets/images/logo-white.png" alt=""></a>
                                 </div>
                             </div>
                             <!--Logo end-->
@@ -19,7 +19,7 @@
                             <div class="col-xl-7 col-lg-7 col-12">
                                 <nav class="main-menu">
                                     <ul>
-                                        <li><a href="index.html">Home <small class="icon-arrow"></small></a>
+                                        <li><a href="/">Home <small class="icon-arrow"></small></a>
 
                                         </li>
                                         <li><a href="job-listing.html"><span class="label-status hot"></span>Jobs <small
