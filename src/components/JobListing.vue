@@ -75,13 +75,6 @@ import Navbar from './Navbar.vue';
                                             </select>
                                         </form>
                                     </div> -->
-                                <div class="layout-switcher">
-                                    <ul class="nav">
-                                        <li><a class="active show" data-bs-toggle="tab" href="#list"><i
-                                                    class="fa fa-list"></i></a></li>
-                                        <li><a data-bs-toggle="tab" href="#grid"><i class="fa fa-th"></i></a></li>
-                                    </ul>
-                                </div>
                             </div>
                         </div>
                     </div>
