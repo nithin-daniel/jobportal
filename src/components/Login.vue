@@ -32,19 +32,20 @@
                             </ul>
                         </div>
                         <div class="tab-content">
+                            <a v-if="error" class="alert alert-danger">{{error}}</a>
                             <div id="login" class="tab-pane fade show active">
                                 <div class="login-register-form">
-                                    <form action="#" method="post">
+                                    <form action="#" method="post"@submit.prevent="Register">
                                         <p>Login to Jotopa with your registered account</p>
                                         <div class="row">
                                             <div class="col-12">
                                                 <div class="single-input">
-                                                    <input type="text" placeholder="Username or Email" name="name">
+                                                    <input type="text" placeholder="Email" name="name" id="name" required v-model="name">
                                                 </div>
                                             </div>
                                             <div class="col-12">
                                                 <div class="single-input">
-                                                    <input type="password" placeholder="Password" name="password">
+                                                    <input type="password" placeholder="Password" name="password" required id="password"v-model="password">
                                                 </div>
                                             </div>
                                             <div class="col-12">
@@ -54,7 +55,7 @@
                                                     <label for="login-form-remember">Remember me</label>
                                                 </div>
                                             </div>
-                                            <div class="col-12 mb-25"><button class="ht-btn">Login</button></div>
+                                            <div class="col-12 mb-25"><button class="ht-btn" type="submit">Login</button></div>
                                         </div>
                                     </form>
                                 </div>

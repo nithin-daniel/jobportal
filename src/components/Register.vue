@@ -36,24 +36,24 @@
                                         <p>Create Your account</p>
                                         <div class="row row-5">
                                             <div class="col-12">
-                                                <div class="single-input">
-                                                    <input type="text" placeholder="Your Username" name="name">
-                                                </div>
+
                                             </div>
                                             <div class="col-12">
                                                 <div class="single-input">
-                                                    <input type="email" placeholder="Your Email Address" name="emain">
+                                                    <input type="email" placeholder="Your Email Address" name="email"
+                                                        id="email" required v-model="email">
                                                 </div>
                                             </div>
                                             <div class="col-sm-6">
                                                 <div class="single-input">
-                                                    <input type="password" placeholder="Password" name="password">
+                                                    <input type="password" placeholder="Password" name="password1"
+                                                        id="password1" required v-model="password1">
                                                 </div>
                                             </div>
                                             <div class="col-sm-6">
                                                 <div class="single-input">
                                                     <input type="password" placeholder="Confirm Password"
-                                                        name="conPassword">
+                                                        name="password2" id="password2" required v-model="password2">
                                                 </div>
                                             </div>
                                             <div class="col-11">
@@ -286,3 +286,38 @@
     </div>
     <!-- Modal Area End -->
 </template>
+
+<script>
+import { ref } from 'vue'
+import { useStore } from 'vuex'
+import { useRouter } from 'vue-router'
+
+export default {
+  name: "RegisterComponent",
+ setup() {
+    const name = ref('')
+    const email = ref('')
+    const password = ref('')
+    const error = ref(null)
+
+    const store = useStore()
+    const router = useRouter()
+
+    const Register = async () => {
+      try {
+        await store.dispatch('register', {
+          email: email.value,
+          password: password2.value,
+          name: name.value
+        })
+        router.push('/')
+      }
+      catch (err) {
+        error.value = err.message
+            }
+    }
+
+    return { Register, name,email, password, error }
+  }
+};
+</script>

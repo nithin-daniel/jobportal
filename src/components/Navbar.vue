@@ -43,6 +43,10 @@
                                                 <i class="lnr lnr-user"></i>
                                                 <span>Login</span>
                                             </a>
+                                            <a href="/register">
+                                                <i class="lnr lnr-user"></i>
+                                                <span>Register</span>
+                                            </a>
                                         </div>
                                     </div>
                                 </div>
