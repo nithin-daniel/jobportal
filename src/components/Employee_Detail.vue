@@ -1,0 +1,433 @@
+<script>
+import Navbar from './Navbar.vue';
+export default {
+    name: "Employee",
+    components: {
+        Navbar
+    }
+}
+</script>
+<template>
+    <Navbar/>
+    <div class="template-color-1">
+
+        <div id="main-wrapper">
+            <!-- Breadcrumb Section Start -->
+            <div class="breadcrumb-section section pt-100 pt-sm-50 pt-xs-40">
+                <div class="container sb-border-two pb-60 pb-sm-50 pb-xs-40">
+                    <div class="row">
+                        <div class="col-12">
+
+                        </div>
+                    </div>
+                    <div class="row align-items-center">
+                        <div class="col-lg-7">
+                            <div class="employer-head-info">
+                                <div class="employer-logo">
+                                    <a href="#"><img src="../assets/images/companies_logo/logo-10.jpg" alt=""></a>
+                                </div>
+                                <div class="employer-content">
+                                    <h1 class="employer-name">HasThemes <i class="fas fa-check-circle"></i></h1>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Breadcrumb Section Start -->
+
+            <!-- Employer Details Section Start -->
+            <div
+                class="employer-details-section section pt-120 pt-lg-100 pt-md-80 pt-sm-50 pt-xs-40 pb-120 pb-lg-100 pb-md-80 pb-sm-60 pb-xs-50">
+                <div class="container">
+                    <div class="row">
+
+
+
+                        <div class="col-lg-8 order-lg-1 order-1 pr-55 pr-md-15 pr-sm-15 pr-xs-15">
+
+                            <div class="employer-main-content">
+                                <div class="field-description">
+                                    <h6>"Experienced professional with a proven track record in delivering results
+                                        across multiple industries. Skilled in fostering strong client relationships and
+                                        driving strategic initiatives for business growth."</h6>
+
+                                    <h3>Overview</h3>
+
+                                    <p>Upperside Group has been established as a marketing company in North and South
+                                        America. Our traditional business model is based on the accomplishment of
+                                        properties in the commercial markets in America. Based on the decision of the
+                                        company to diversify our properties; we have now established this corporation in
+                                        Toronto. The revenues of our company are expected to be nearly US$50,000 per
+                                        month depending on the variables that are factored in with investments in the
+                                        commercial industry. There is a great need for certified or official bank checks
+                                        in the future to deal with some trading transactions.</p>
+
+                                    <p>In addition to marketing investments, the company has invested portions of its
+                                        assets in the purchase and sale of securities such as stocks and bonds as well
+                                        as Forex trading on global markets. Upperside Group conducts marketing as well
+                                        as consulting. The company undertakes all maintenance duties for marketing
+                                        facilities and organizations and conducts all the security and surveillance for
+                                        the properties.</p>
+
+                                    <h3>What You Will Get</h3>
+
+                                    <p>While salary is a major deciding factor in accepting a job offer, employees
+                                        experience job satisfaction beyond monetary value. Hiring managers need to know
+                                        how to attract the best and most dedicated candidates, and having the right
+                                        benefits package is sure to attract the right people. So, what benefits do
+                                        employees value most?</p>
+
+                                    <ul>
+                                        <li>Extra Private health insurance coverage by the company to help you getting
+                                            better focus on working</li>
+                                        <li>Flexible working time schedule and leave policy as we know the importance of
+                                            work-life balance</li>
+                                        <li>CBe exposed to the latest technology and the most innovative ideas worldwide
+                                        </li>
+                                        <li>Company trip, team-building events</li>
+                                        <li>13th salary and project bonus</li>
+                                        <li>Work-from-home policy</li>
+                                        <li>Support laptop</li>
+                                        <li>Extra healthcare package</li>
+                                    </ul>
+                                </div>
+                                <div class="field-skills">
+                                    <h3>Skills</h3>
+                                    <ul class="skill-tag">
+                                        <li><a href="#">Account Manager</a></li>
+                                        <li><a href="#">Administrative</a></li>
+                                        <li><a href="#">Android</a></li>
+                                        <li><a href="#">Angular</a></li>
+                                    </ul>
+                                </div>
+
+
+
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <!-- Employer Details Section End -->
+
+            <!--Footer section start-->
+            <footer class="footer-section section st-border">
+
+                <!-- Footer Top Section Start -->
+                <div
+                    class="footer-top-section section pt-115 pt-lg-95 pt-md-75 pt-sm-55 pt-xs-45 pb-90 pb-lg-70 pb-md-40 pb-sm-20 pb-xs-15">
+                    <div class="container">
+                        <div class="row">
+
+                            <div class="col-xl-4 col-lg-3 col-md-6">
+                                <!-- Footer Widget Start -->
+                                <div class="footer-widget mb-30">
+                                    <h6 class="title">Contact Info</h6>
+                                    <div class="address">
+                                        <i class="lnr lnr-map-marker"></i>
+                                        <span>8375 E. Heather Drive Tonawanda, Manchester 14150, United Kingdom</span>
+                                    </div>
+                                    <div class="email">
+                                        <i class="lnr lnr-envelope"></i>
+                                        <span>jopota@recruitment.com</span>
+                                    </div>
+                                    <div class="phone theme-color">(+1) 000 987-1234</div>
+                                    <div class="footer-widget-image d-flex mt-35">
+                                        <a class="mr-5" href="#"><img src="../assets/images/app-store/app-store-2.png"
+                                                alt=""></a>
+                                        <a href="#"><img src="../assets/images/app-store/app-chplay-2.png" alt=""></a>
+                                    </div>
+                                </div>
+                                <!-- Footer Widget End -->
+                            </div>
+
+                            <div class="col-xl-2 col-lg-2 col-md-6">
+                                <!-- Footer Widget Start -->
+                                <div class="footer-widget mb-30">
+                                    <h6 class="title">Useful Links</h6>
+                                    <div class="footer-widget-link">
+                                        <ul>
+                                            <li><a href="#">Press Corner</a></li>
+                                            <li><a href="#">Policy Privacy</a></li>
+                                            <li><a href="#">Terms And Conditions</a></li>
+                                            <li><a href="#">Partner</a></li>
+                                            <li><a href="#">Help Center</a></li>
+                                            <li><a href="#">Contact Us</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <!-- Footer Widget End -->
+                            </div>
+
+                            <div class="col-xl-2 col-lg-3 col-md-6">
+                                <!-- Footer Widget Start -->
+                                <div class="footer-widget mb-30">
+                                    <h6 class="title">Featured Jobs</h6>
+                                    <div class="footer-widget-link">
+                                        <ul>
+                                            <li><a href="#">Teachers</a></li>
+                                            <li><a href="#">Accounting</a></li>
+                                            <li><a href="#">Customer Service</a></li>
+                                            <li><a href="#">Digital Marketing</a></li>
+                                            <li><a href="#">Web & Software Dev</a></li>
+                                            <li><a href="#">Science & Analitycs</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <!-- Footer Widget End -->
+                            </div>
+
+                            <div class="col-xl-4 col-lg-4 col-md-6">
+                                <!-- Footer Widget Start -->
+                                <div class="footer-widget mb-30">
+                                    <h6 class="title">Newsletter</h6>
+                                    <div class="newsletter">
+                                        <p>Join our email subscription now to get updates on <strong>new jobs</strong>
+                                            and <strong>notifications</strong>.</p>
+                                        <div class="newsletter-form">
+                                            <form id="mc-form" class="mc-form">
+                                                <input type="email" placeholder="Enter Your email..." required=""
+                                                    name="EMAIL">
+                                                <button class="ht-btn small-btn" type="submit"
+                                                    value="submit">Subscribe</button>
+                                            </form>
+                                        </div>
+                                        <!-- mailchimp-alerts Start -->
+                                        <div class="mailchimp-alerts">
+                                            <div class="mailchimp-submitting"></div><!-- mailchimp-submitting end -->
+                                            <div class="mailchimp-success"></div><!-- mailchimp-success end -->
+                                            <div class="mailchimp-error"></div><!-- mailchimp-error end -->
+                                        </div>
+                                        <!-- mailchimp-alerts end -->
+                                    </div>
+                                </div>
+                                <!-- Footer Widget End -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Footer Top Section End -->
+
+                <!--Footer bottom start-->
+                <div class="footer-bottom section fb-60">
+                    <div class="container">
+                        <div class="row g-0 st-border pt-35 pb-35 align-items-center justify-content-between">
+                            <div class="col-lg-6 col-md-6">
+                                <div class="copyright">
+                                    <p>&copy;2022 <a href="https://hasthemes.com/">Jetapo</a>. All rights reserved.</p>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-md-6">
+                                <div class="footer-social">
+                                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                                    <a href="#"><i class="fab fa-instagram"></i></a>
+                                    <a href="#"><i class="fab fa-google"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--Footer bottom end-->
+
+            </footer>
+            <!--Footer section end-->
+
+            <!-- Modal Area Start -->
+            <div class="modal fade quick-view-modal-container" id="quick-view-modal-container" tabindex="-1"
+                role="dialog" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="col-xl-12 col-lg-12">
+                                <div class="row g-0">
+
+                                    <div class="col-lg-4">
+                                        <div class="login-register-form-area">
+                                            <div class="login-tab-menu">
+                                                <ul class="nav">
+                                                    <li><a class="active show" data-bs-toggle="tab"
+                                                            href="#login">Login</a></li>
+                                                    <li><a data-bs-toggle="tab" href="#register">Register</a></li>
+                                                </ul>
+                                            </div>
+                                            <div class="tab-content">
+                                                <div id="login" class="tab-pane fade show active">
+                                                    <div class="login-register-form">
+                                                        <form action="#" method="post">
+                                                            <p>Login to Jotopa with your registered account</p>
+                                                            <div class="row">
+                                                                <div class="col-12">
+                                                                    <div class="single-input">
+                                                                        <input type="text"
+                                                                            placeholder="Username or Email" name="name">
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-12">
+                                                                    <div class="single-input">
+                                                                        <input type="password" placeholder="Password"
+                                                                            name="password">
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-12">
+                                                                    <div class="checkbox-input">
+                                                                        <input type="checkbox"
+                                                                            name="login-form-remember"
+                                                                            id="login-form-remember">
+                                                                        <label for="login-form-remember">Remember
+                                                                            me</label>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-12 mb-25"><button
+                                                                        class="ht-btn">Login</button></div>
+                                                            </div>
+                                                        </form>
+                                                        <div class="divider">
+                                                            <span class="line"></span>
+                                                            <span class="circle">or login with</span>
+                                                        </div>
+                                                        <div class="social-login">
+                                                            <ul class="social-icon">
+                                                                <li><a class="facebook" href="#"><i
+                                                                            class="fab fa-facebook"></i></a></li>
+                                                                <li><a class="twitter" href="#"><i
+                                                                            class="fab fa-twitter"></i></a></li>
+                                                                <li><a class="linkedin" href="#"><i
+                                                                            class="fab fa-linkedin"></i></a></li>
+                                                                <li><a class="google" href="#"><i
+                                                                            class="fab fa-google-plus"></i></a></li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div id="register" class="tab-pane fade">
+                                                    <div class="login-register-form">
+                                                        <form action="#" method="post">
+                                                            <p>Create Your account</p>
+                                                            <div class="row row-5">
+                                                                <div class="col-12">
+                                                                    <div class="single-input">
+                                                                        <input type="text" placeholder="Your Username"
+                                                                            name="name">
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-12">
+                                                                    <div class="single-input">
+                                                                        <input type="email"
+                                                                            placeholder="Your Email Address"
+                                                                            name="emain">
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-sm-6">
+                                                                    <div class="single-input">
+                                                                        <input type="password" placeholder="Password"
+                                                                            name="password">
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-sm-6">
+                                                                    <div class="single-input">
+                                                                        <input type="password"
+                                                                            placeholder="Confirm Password"
+                                                                            name="conPassword">
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-6">
+                                                                    <div class="checkbox-input">
+                                                                        <input type="checkbox"
+                                                                            name="login-form-candidate"
+                                                                            id="login-form-candidate">
+                                                                        <label for="login-form-candidate">I am a
+                                                                            candidate</label>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-6">
+                                                                    <div class="checkbox-input">
+                                                                        <input type="checkbox"
+                                                                            name="login-form-employer"
+                                                                            id="login-form-employer">
+                                                                        <label for="login-form-employer">I am a
+                                                                            employer</label>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-12">
+                                                                    <div class="register-account">
+                                                                        <input id="register-terms-conditions"
+                                                                            type="checkbox" class="checkbox" checked=""
+                                                                            required="">
+                                                                        <label for="register-terms-conditions">I read
+                                                                            and agree to the <a href="#">Terms &amp;
+                                                                                Conditions</a> and <a href="#">Privacy
+                                                                                Policy</a></label>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-12 mb-25"><button
+                                                                        class="ht-btn">Register</button></div>
+                                                            </div>
+                                                        </form>
+                                                        <div class="divider">
+                                                            <span class="line"></span>
+                                                            <span class="circle">or login with</span>
+                                                        </div>
+                                                        <div class="social-login">
+                                                            <ul class="social-icon">
+                                                                <li><a class="facebook" href="#"><i
+                                                                            class="fab fa-facebook"></i></a></li>
+                                                                <li><a class="twitter" href="#"><i
+                                                                            class="fab fa-twitter"></i></a></li>
+                                                                <li><a class="linkedin" href="#"><i
+                                                                            class="fab fa-linkedin"></i></a></li>
+                                                                <li><a class="google" href="#"><i
+                                                                            class="fab fa-google-plus"></i></a></li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-8">
+                                        <div class="login-instruction">
+                                            <div class="login-instruction-content">
+                                                <h3 class="title">Why Login To Us</h3>
+                                                <p>It’s important for you to have an account and login in order to have
+                                                    full access at Jotopa. We need to know your account details in order
+                                                    to allow work together</p>
+                                                <ul class="list-reasons">
+                                                    <li class="reason">Be alerted to the latest jobs</li>
+                                                    <li class="reason">Apply for jobs with a single click</li>
+                                                    <li class="reason">Showcase your CV to thousands of employers</li>
+                                                    <li class="reason">Keep a record of all your applications</li>
+                                                </ul>
+                                                <span class="sale-text theme-color border-color">Login today &amp; Get
+                                                    15% Off Coupon for the first planning purchase</span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <!-- Modal Area End -->
+
+
+            <!-- Placed js at the end of the document so the pages load faster -->
+
+
+        </div>
+
+
+
+
+    </div>
+</template>
