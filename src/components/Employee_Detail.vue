@@ -1,14 +1,10 @@
-<script>
+<script setup>
 import Navbar from './Navbar.vue';
-export default {
-    name: "Employee",
-    components: {
-        Navbar
-    }
-}
 </script>
+
+
 <template>
-    <Navbar/>
+    <Navbar />
     <div class="template-color-1">
 
         <div id="main-wrapper">
