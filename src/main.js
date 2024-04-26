@@ -14,6 +14,8 @@ import Sample from './components/EmployeeDetails.vue'
 import JobListing from './components/JobListing.vue'
 import JobDetails from './components/JobDetails.vue'
 import CandidateListing from './components/CandidateListing.vue'
+import Login from './components/Login.vue'
+import Register from './components/Register.vue'
 
 const routes = [
     {path:'/',component:Home},
@@ -21,6 +23,10 @@ const routes = [
     {path:'/jobs/',component:JobListing},
     {path:'/candidates/',component:CandidateListing},
     {path:'/jobs-details/',component:JobDetails},
+    {path:'/login/',component:Login},
+    {path:'/register/',component:Register},
+
+
 
 
 ]

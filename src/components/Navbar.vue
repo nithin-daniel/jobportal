@@ -39,7 +39,7 @@
                                 <div class="header-btn-action d-flex justify-content-end">
                                     <div class="btn-action-wrap d-flex">
                                         <div class="jp-author item">
-                                            <a href="login-register.html">
+                                            <a href="/login">
                                                 <i class="lnr lnr-user"></i>
                                                 <span>Login</span>
                                             </a>
