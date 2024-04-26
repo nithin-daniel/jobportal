@@ -83,4 +83,3 @@
     </div>
     <!-- Login Register Section End -->
 </template>
-
