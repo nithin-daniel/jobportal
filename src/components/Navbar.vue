@@ -25,7 +25,7 @@
                                         <li><a href="/jobs"><span class="label-status hot"></span>Jobs <small
                                                     class="icon-arrow"></small></a>
                                         </li>
-                                        <li><a href="candidates-listing.html"><span class="label-status new"></span>
+                                        <li><a href="/candidates"><span class="label-status new"></span>
                                                 Candidates <small class="icon-arrow"></small></a>
 
                                         </li>

@@ -112,7 +112,7 @@ import Navbar from './Navbar.vue';
                                                         </div>
                                                         <div class="title-name">
                                                             <h3 class="job-title">
-                                                                <a href="job-details.html">Chief Accountant</a>
+                                                                <a href="/jobs-details">Chief Accountant</a>
                                                             </h3>
                                                             <div class="employer-name">
                                                                 <a href="job-details.html">Shippo Company</a>
