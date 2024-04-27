@@ -32,20 +32,22 @@
                             </ul>
                         </div>
                         <div class="tab-content">
-                            <a v-if="error" class="alert alert-danger">{{error}}</a>
+                            <a v-if="errMsg" class="alert alert-danger">{{ errMsg }}</a>
                             <div id="login" class="tab-pane fade show active">
                                 <div class="login-register-form">
-                                    <form action="#" method="post"@submit.prevent="Register">
+                                    <form action="#" method="post" @submit.prevent="Register">
                                         <p>Login to Jotopa with your registered account</p>
                                         <div class="row">
                                             <div class="col-12">
                                                 <div class="single-input">
-                                                    <input type="text" placeholder="Email" name="name" id="name" required v-model="name">
+                                                    <input type="text" placeholder="Email" name="email" id="email"
+                                                        required v-model="email">
                                                 </div>
                                             </div>
                                             <div class="col-12">
                                                 <div class="single-input">
-                                                    <input type="password" placeholder="Password" name="password" required id="password"v-model="password">
+                                                    <input type="password" placeholder="Password" name="password"
+                                                        required id="password" v-model="password">
                                                 </div>
                                             </div>
                                             <div class="col-12">
@@ -55,7 +57,8 @@
                                                     <label for="login-form-remember">Remember me</label>
                                                 </div>
                                             </div>
-                                            <div class="col-12 mb-25"><button class="ht-btn" type="submit">Login</button></div>
+                                            <div class="col-12 mb-25"><button class="ht-btn" type="submit"
+                                                    @click="signIn">Login</button></div>
                                         </div>
                                     </form>
                                 </div>
@@ -84,3 +87,44 @@
     </div>
     <!-- Login Register Section End -->
 </template>
+
+<script setup>
+import { ref } from 'vue'
+import db from '../../firebase/firebase.js'
+import { getAuth, signInWithEmailAndPassword } from 'firebase/auth'
+import { useRouter } from 'vue-router' // import router
+import { getFirestore } from "firebase/firestore";
+import { collection, getDocs, addDoc } from "firebase/firestore";
+
+const email = ref('')
+const password = ref('')
+const errMsg = ref() // ERROR MESSAGE
+
+const router = useRouter() // get a reference to our vue router
+
+const signIn = () => { // we also renamed this method 
+    signInWithEmailAndPassword(getAuth(), email.value, password.value) // THIS LINE CHANGED
+        .then(async (data) => {
+            console.log('Successfully logged in!');
+            localStorage.setItem("user_email", data.user['email']);
+            localStorage.setItem("user_status", true);
+            router.push('/')
+        })
+        .catch(error => {
+            switch (error.code) {
+                case 'auth/invalid-email':
+                    errMsg.value = 'Invalid email'
+                    break
+                case 'auth/user-not-found':
+                    errMsg.value = 'No account with that email was found'
+                    break
+                case 'auth/wrong-password':
+                    errMsg.value = 'Incorrect password'
+                    break
+                default:
+                    errMsg.value = 'Email or password was incorrect'
+                    break
+            }
+        });
+}
+</script>

@@ -32,61 +32,61 @@
                             <div id="login" class="tab-pane fade show active">
                                 <div class="login-register-form">
                                     <!-- <form action="#" method="post"> -->
-                                        <p>Create Your account</p>
-                                        <div class="row row-5">
-                                            <div class="col-12">
+                                    <p>Create Your account</p>
+                                    <div class="row row-5">
+                                        <div class="col-12">
 
-                                            </div>
-                                            <div class="col-12">
-                                                <div class="single-input">
-                                                    <input type="email" placeholder="Your Email Address" name="email"
-                                                        id="email" required v-model="email">
-                                                </div>
-                                            </div>
-                                            <div class="col-sm-6">
-                                                <div class="single-input">
-                                                    <input type="password" placeholder="Password" name="password1"
-                                                        id="password1" required v-model="password1">
-                                                </div>
-                                            </div>
-                                            <div class="col-sm-6">
-                                                <div class="single-input">
-                                                    <input type="password" placeholder="Confirm Password"
-                                                        name="password2" id="password2" required v-model="password2">
-                                                </div>
-                                            </div>
-                                            <div class="col-11">
-                                                <div class="checkbox-input">
-                                                    <input type="radio" name="login-form" id="login-form-candidate">
-                                                    <label for="login-form-candidate">I am a company</label>
-
-                                                    <input type="radio" name="login-form" id="login-form-employer">
-                                                    <label for="login-form-employer">I am a employer</label>
-                                                </div>
-                                            </div>
-                                            <div class="col-6">
-                                                <div class="checkbox-input">
-                                                </div>
-                                            </div>
-                                            <div class="col-12">
-                                                <div class="register-account">
-                                                    <label for="register-terms-conditions">Upload a Profile
-                                                        Picture</label>
-                                                    <input id="register-terms-conditions" type="file" class=""
-                                                        checked="" >
-                                                </div>
-                                            </div>
-                                            <div class="col-12">
-                                                <div class="register-account">
-                                                    <input id="register-terms-conditions" type="checkbox"
-                                                        class="checkbox" checked="" required="">
-                                                    <label for="register-terms-conditions">I read and agree to the <a
-                                                            href="#">Terms &amp; Conditions</a> and <a href="#">Privacy
-                                                            Policy</a></label>
-                                                </div>
-                                            </div>
-                                            <div class="col-12 mb-25"><button class="ht-btn" @click="register">Register</button></div>
                                         </div>
+                                        <div class="col-12">
+                                            <div class="single-input">
+                                                <input type="email" placeholder="Your Email Address" name="email"
+                                                    id="email" required v-model="email">
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div class="single-input">
+                                                <input type="password" placeholder="Password" name="password1"
+                                                    id="password1" required v-model="password1">
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div class="single-input">
+                                                <input type="password" placeholder="Confirm Password" name="password2"
+                                                    id="password2" required v-model="password2">
+                                            </div>
+                                        </div>
+                                        <div class="col-11">
+                                            <div class="checkbox-input">
+                                                <input type="radio" name="login-form" id="login-form-candidate" v-model="designation.value" >
+                                                <label for="login-form-candidate">I am a company</label>
+
+                                                <input type="radio" name="login-form" id="login-form-employer"  v-model="designation.value" >
+                                                <label for="login-form-employer">I am a employer</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-6">
+                                            <div class="checkbox-input">
+                                            </div>
+                                        </div>
+                                        <div class="col-12">
+                                            <div class="register-account">
+                                                <label for="register-terms-conditions">Upload a Profile
+                                                    Picture</label>
+                                                <input id="register-terms-conditions" type="file" class="" checked="">
+                                            </div>
+                                        </div>
+                                        <div class="col-12">
+                                            <div class="register-account">
+                                                <input id="register-terms-conditions" type="checkbox" class="checkbox"
+                                                    checked="" required="">
+                                                <label for="register-terms-conditions">I read and agree to the <a
+                                                        href="#">Terms &amp; Conditions</a> and <a href="#">Privacy
+                                                        Policy</a></label>
+                                            </div>
+                                        </div>
+                                        <div class="col-12 mb-25"><button class="ht-btn"
+                                                @click="register">Register</button></div>
+                                    </div>
                                     <!-- </form> -->
                                 </div>
                                 <a href="/login">Already have account?</a>
@@ -115,24 +115,47 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
 import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth'
 import { useRouter } from 'vue-router' // import router
+import { collection, addDoc } from "firebase/firestore";
+import {db,storage} from '../../firebase/firebase.js'
+import { getDatabase, ref as reff, set } from "firebase/database";
+import { getFirestore } from 'firebase/firestore'
+// import { getStorage, ref as reff } from "firebase/storage";
+import {ref as storeref} from 'firebase/storage'
 
 const email = ref('')
 const password2 = ref('')
+const designation = ref('')
+const isCompany = ref(false);
+const profilePic = ref(null)
 
 const router = useRouter() // get a reference to our vue router
 const register = () => {
-    createUserWithEmailAndPassword(getAuth(),email.value, password2.value) // need .value because ref()
-    .then((data) => {
-      console.log('Successfully registered!');
-      router.push('/') // redirect to the feed
-    })
-    .catch(error => {
-      console.log(error.code)
-      alert(error.message);
-    });
+    const storageImage = ()=>{
+        const storageRef = storeref()
+    }
+    createUserWithEmailAndPassword(getAuth(), email.value, password2.value) // need .value because ref()
+        .then(async (data) => {
+            const dbnew = getFirestore();
+            console.log(designation);
+            const docRef = await addDoc(collection(dbnew, "sample"), {
+                user:data.user.uid,
+                designation:isCompany.value ? 'company' : 'employer',
+                profile_url: "Tokyo"
+            });
+            console.log("Document written with ID: ", docRef.id);
+
+        })
+        .then(() => {
+            console.log('Successfully registered!');
+            router.push('/login') // redirect to the feed
+        })
+        .catch(error => {
+            console.log(error.code)
+            alert(error.message);
+        });
 }
 
 </script>
