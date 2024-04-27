@@ -1,5 +1,7 @@
 import { createApp } from 'vue'
 import {createRouter,createWebHistory} from 'vue-router'
+import app from '../firebase/firebase.js'
+import firebase from 'firebase/compat/app';
 // import './style.css'
 import '../src/assets/css/plugins/plugins.css'
 import '../src/assets/css/vendor/bootstrap.min.css'
