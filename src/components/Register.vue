@@ -87,8 +87,7 @@
                                                         Policy</a></label>
                                             </div>
                                         </div>
-                                        <div class="col-12 mb-25"><button class="ht-btn"
-                                                @click="register">Register</button></div>
+                                        <div class="col-12 mb-25"><button class="ht-btn"@click="register">Register</button></div>
                                     </div>
                                     <!-- </form> -->
                                 </div>
@@ -140,20 +139,20 @@ const profilePic = (event) => {
     profilePicref.value = file
 }
 const register = () => {
-    createUserWithEmailAndPassword(getAuth(), email.value, password2.value) 
+    createUserWithEmailAndPassword(getAuth(), email.value, password2.value)
         .then(async (data) => {
             const dbnew = getFirestore();
-            console.log(designation);          
+            console.log(designation);
             const storage = getStorage();
 
-            const imageRef = storeref(storage,'images/'+profilePicref.value.name);
+            const imageRef = storeref(storage, 'images/' + profilePicref.value.name);
             uploadBytes(imageRef, profilePicref.value).then((snapshot) => {
                 console.log('Uploaded profile picture!');
                 console.log(snapshot);
             })
             const docRef = await addDoc(collection(dbnew, "users"), {
                 user: data.user.uid,
-                email:email.value   ,
+                email: email.value,
                 designation: isCompany.value ? 'company' : 'employer',
                 profile_url: `https://firebasestorage.googleapis.com/v0/b/jobportal-vuejs.appspot.com/o/images%2F${profilePicref.value.name}?alt=media&token=4b0f14f1-24bf-4f40-acb1-79a38534757e`
             });
@@ -162,7 +161,7 @@ const register = () => {
         })
         .then(() => {
             console.log('Successfully registered!');
-            router.push('/login') 
+            router.push('/login')
         })
         .catch(error => {
             console.log(error.code)
