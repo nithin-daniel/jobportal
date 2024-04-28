@@ -1,8 +1,8 @@
 <template>
     <div class="template-color-1">
-    <div id="main-wrapper">
-    <!--Header section start-->
-    <div class="header-absolute sb-border header-sticky d-none d-lg-block">
+        <div id="main-wrapper">
+            <!--Header section start-->
+            <div class="header-absolute sb-border header-sticky d-none d-lg-block">
                 <div class="main-header">
                     <div class="container-fluid pl-50 pl-lg-15 pl-md-15 pr-0">
                         <div class="row align-items-center g-0">
@@ -38,7 +38,14 @@
                             <div class="col-xl-3 col-lg-3 col-12">
                                 <div class="header-btn-action d-flex justify-content-end">
                                     <div class="btn-action-wrap d-flex">
-                                        <div class="jp-author item">
+                                        <div class="jp-author item" v-if="storedValue">
+                                            <a href="/" v-on:click="logout">
+                                                <i class="lnr lnr-user"></i>
+                                                <span>Logout</span>
+
+                                            </a>
+                                        </div>
+                                        <div class="jp-author item" v-else>
                                             <a href="/login">
                                                 <i class="lnr lnr-user"></i>
                                                 <span>Login</span>
@@ -119,3 +126,36 @@
         </div>
     </div>
 </template>
+
+<script>
+import { ref } from 'vue'; // Assuming you're using Vue 3 (optional)
+
+export default {
+    setup() {
+        const storedValue = ref(null); // Initialize a reactive variable for the value
+
+        // Access localStorage on component mount (or at a specific time)
+        const fetchStoredValue = () => {
+            const valueFromStorage = localStorage.getItem('user_id');
+            storedValue.value = valueFromStorage;
+        };
+
+        fetchStoredValue();
+
+        return {
+            storedValue,
+            // Other component data and methods
+        };
+    },
+    methods: {
+        logout(event) {
+            // Execute your click event logic here
+
+            // Remove the event listener after the first click
+            // this.$el.removeEventListener('click', this.handleClickOnce);
+            localStorage.clear();
+        },
+    },
+};
+
+</script>
