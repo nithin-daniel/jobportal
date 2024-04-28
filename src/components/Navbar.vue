@@ -163,9 +163,7 @@ export default {
 
         return {
             storedValue,
-            // companyornot,
             isCompany
-            // Other component data and methods
         };
     },
     methods: {

@@ -13,9 +13,11 @@ const addWork = async() => {
         email: localStorage.email,
         overview:overview ,
         youget:youget,
+        skills:skills
     });
     console.log("Document written with ID: ", docRef.id);
 }
+addWork()
 </script>
 <template>
     <div class="">
