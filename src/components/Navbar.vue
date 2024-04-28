@@ -38,12 +38,22 @@
                             <div class="col-xl-3 col-lg-3 col-12">
                                 <div class="header-btn-action d-flex justify-content-end">
                                     <div class="btn-action-wrap d-flex">
-                                        <div class="jp-author item" v-if="storedValue">
-                                            <a href="/" v-on:click="logout">
-                                                <i class="lnr lnr-user"></i>
-                                                <span>Logout</span>
+                                        <div v-if="storedValue">
+                                            <div class="jp-author item">
+                                                <div v-if="companyornot">
+                                                    <a href="/add-work">
+                                                        <i class="lnr lnr-user"></i>
+                                                        <span>Add Work</span>
+                                                    </a>
+                                                </div>
+                                                <div v-else>
+                                                </div>
+                                                <a href="/" v-on:click="logout">
+                                                    <i class="lnr lnr-user"></i>
+                                                    <span>Logout</span>
 
-                                            </a>
+                                                </a>
+                                            </div>
                                         </div>
                                         <div class="jp-author item" v-else>
                                             <a href="/login">
@@ -129,14 +139,20 @@
 
 <script>
 import { ref } from 'vue'; // Assuming you're using Vue 3 (optional)
+import { useRouter } from 'vue-router' // import router
+
+const router = useRouter() // get a reference to our vue router
 
 export default {
     setup() {
         const storedValue = ref(null); // Initialize a reactive variable for the value
+        const companyornot = ref(null);
 
         // Access localStorage on component mount (or at a specific time)
         const fetchStoredValue = () => {
             const valueFromStorage = localStorage.getItem('user_id');
+            const company = localStorage.getItem('designation')
+            companyornot.value = company
             storedValue.value = valueFromStorage;
         };
 
@@ -144,16 +160,14 @@ export default {
 
         return {
             storedValue,
+            companyornot
             // Other component data and methods
         };
     },
     methods: {
         logout(event) {
-            // Execute your click event logic here
-
-            // Remove the event listener after the first click
-            // this.$el.removeEventListener('click', this.handleClickOnce);
             localStorage.clear();
+            router.push('/login');
         },
     },
 };
