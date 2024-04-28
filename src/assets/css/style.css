@@ -7810,6 +7810,27 @@ body.template-color-4 .copyright p a:hover {
   height: 150px;
   margin-bottom: 10px;
 }
+.single-input select {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #d1d3da;
+  border-radius: 3px;
+  color: #444444;
+  background-color: #fff;
+  appearance: none; /* Remove default arrow */
+  -webkit-appearance: none; /* Remove default arrow for WebKit browsers */
+  background-image: url('data:image/svg+xml;utf8,<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/></svg>');
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  background-size: 16px;
+  cursor: pointer;
+}
+
+.single-input select option {
+  background-color: #fff;
+  color: #444444;
+  padding: 8px 10px;
+}
 
 .checkbox-input {
   display: -webkit-box;
