@@ -35,19 +35,21 @@
                             <!--Menu end-->
 
                             <!-- Cart & Search Area Start -->
+
                             <div class="col-xl-3 col-lg-3 col-12">
                                 <div class="header-btn-action d-flex justify-content-end">
                                     <div class="btn-action-wrap d-flex">
+                                        <div v-if="isCompany">
+                                            <div class="jp-author item">
+                                                <a href="/add-work">
+                                                    <i class="lnr lnr-user"></i>
+                                                    <span>Add Work</span>
+
+                                                </a>
+                                            </div>
+                                        </div>
                                         <div v-if="storedValue">
                                             <div class="jp-author item">
-                                                <div v-if="companyornot">
-                                                    <a href="/add-work">
-                                                        <i class="lnr lnr-user"></i>
-                                                        <span>Add Work</span>
-                                                    </a>
-                                                </div>
-                                                <div v-else>
-                                                </div>
                                                 <a href="/" v-on:click="logout">
                                                     <i class="lnr lnr-user"></i>
                                                     <span>Logout</span>
@@ -146,21 +148,23 @@ const router = useRouter() // get a reference to our vue router
 export default {
     setup() {
         const storedValue = ref(null); // Initialize a reactive variable for the value
-        const companyornot = ref(null);
+        const addwork = ref('');
 
         // Access localStorage on component mount (or at a specific time)
         const fetchStoredValue = () => {
             const valueFromStorage = localStorage.getItem('user_id');
             const company = localStorage.getItem('designation')
-            companyornot.value = company
+            addwork.value = company
             storedValue.value = valueFromStorage;
         };
 
         fetchStoredValue();
+        const isCompany = addwork.value === 'company';
 
         return {
             storedValue,
-            companyornot
+            // companyornot,
+            isCompany
             // Other component data and methods
         };
     },
