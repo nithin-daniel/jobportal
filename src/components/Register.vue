@@ -57,10 +57,12 @@
                                         </div>
                                         <div class="col-11">
                                             <div class="checkbox-input">
-                                                <input type="radio" name="login-form" id="login-form-candidate" v-model="designation.value" >
+                                                <input type="radio" name="login-form" id="login-form-candidate"
+                                                    v-model="designation.value">
                                                 <label for="login-form-candidate">I am a company</label>
 
-                                                <input type="radio" name="login-form" id="login-form-employer"  v-model="designation.value" >
+                                                <input type="radio" name="login-form" id="login-form-employer"
+                                                    v-model="designation.value">
                                                 <label for="login-form-employer">I am a employer</label>
                                             </div>
                                         </div>
@@ -72,7 +74,8 @@
                                             <div class="register-account">
                                                 <label for="register-terms-conditions">Upload a Profile
                                                     Picture</label>
-                                                <input id="register-terms-conditions" type="file" class="" checked="">
+                                                <input id="register-terms-conditions" type="file" class="" checked=""
+                                                    accept="image/*" ref="profilePic" @change="profilePic">
                                             </div>
                                         </div>
                                         <div class="col-12">
@@ -119,38 +122,46 @@ import { ref, onMounted } from 'vue'
 import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth'
 import { useRouter } from 'vue-router' // import router
 import { collection, addDoc } from "firebase/firestore";
-import {db,storage} from '../../firebase/firebase.js'
+import * as firebase from '../../firebase/firebase.js'
 import { getDatabase, ref as reff, set } from "firebase/database";
 import { getFirestore } from 'firebase/firestore'
 // import { getStorage, ref as reff } from "firebase/storage";
-import {ref as storeref} from 'firebase/storage'
+import { getStorage, ref as storeref, uploadBytes } from 'firebase/storage'
 
 const email = ref('')
 const password2 = ref('')
 const designation = ref('')
 const isCompany = ref(false);
-const profilePic = ref(null)
+const profilePicref = ref(null);
 
 const router = useRouter() // get a reference to our vue router
+const profilePic = (event) => {
+    const file = event.target.files[0]
+    profilePicref.value = file
+}
 const register = () => {
-    const storageImage = ()=>{
-        const storageRef = storeref()
-    }
-    createUserWithEmailAndPassword(getAuth(), email.value, password2.value) // need .value because ref()
+    createUserWithEmailAndPassword(getAuth(), email.value, password2.value) 
         .then(async (data) => {
             const dbnew = getFirestore();
-            console.log(designation);
+            console.log(designation);          
+            const storage = getStorage();
+
+            const imageRef = storeref(storage,'images/'+profilePicref.value.name);
+            uploadBytes(imageRef, profilePicref.value).then((snapshot) => {
+                console.log('Uploaded profile picture!');
+                console.log(snapshot);
+            })
             const docRef = await addDoc(collection(dbnew, "sample"), {
-                user:data.user.uid,
-                designation:isCompany.value ? 'company' : 'employer',
-                profile_url: "Tokyo"
+                user: data.user.uid,
+                designation: isCompany.value ? 'company' : 'employer',
+                profile_url: `https://firebasestorage.googleapis.com/v0/b/jobportal-vuejs.appspot.com/o/images%2F${profilePicref.value.name}?alt=media&token=4b0f14f1-24bf-4f40-acb1-79a38534757e`
             });
             console.log("Document written with ID: ", docRef.id);
 
         })
         .then(() => {
             console.log('Successfully registered!');
-            router.push('/login') // redirect to the feed
+            router.push('/login') 
         })
         .catch(error => {
             console.log(error.code)
