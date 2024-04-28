@@ -57,12 +57,11 @@
                                         </div>
                                         <div class="col-11">
                                             <div class="checkbox-input">
-                                                <input type="radio" name="login-form" id="login-form-candidate"
-                                                    v-model="designation.value">
+                                                <input type="radio" name="login-form" id="login-form-candidate">
                                                 <label for="login-form-candidate">I am a company</label>
 
                                                 <input type="radio" name="login-form" id="login-form-employer"
-                                                    v-model="designation.value">
+                                                    v-model="designation">
                                                 <label for="login-form-employer">I am a employer</label>
                                             </div>
                                         </div>
@@ -75,7 +74,7 @@
                                                 <label for="register-terms-conditions">Upload a Profile
                                                     Picture</label>
                                                 <input id="register-terms-conditions" type="file" class="" checked=""
-                                                    accept="image/*" ref="profilePic" @change="profilePic">
+                                                    accept="image/*" ref="profilePic" @change="profilePic" required>
                                             </div>
                                         </div>
                                         <div class="col-12">
@@ -130,7 +129,7 @@ import { getStorage, ref as storeref, uploadBytes } from 'firebase/storage'
 const email = ref('')
 const password2 = ref('')
 const designation = ref('')
-const isCompany = ref(false);
+// const designation = ref(false);
 const profilePicref = ref(null);
 
 const router = useRouter() // get a reference to our vue router
@@ -153,7 +152,7 @@ const register = () => {
             const docRef = await addDoc(collection(dbnew, "users"), {
                 user: data.user.uid,
                 email: email.value,
-                designation: isCompany.value ? 'company' : 'employer',
+                designation: designation.value ? 'employer' : 'company',
                 profile_url: `https://firebasestorage.googleapis.com/v0/b/jobportal-vuejs.appspot.com/o/images%2F${profilePicref.value.name}?alt=media&token=4b0f14f1-24bf-4f40-acb1-79a38534757e`
             });
             console.log("Document written with ID: ", docRef.id);

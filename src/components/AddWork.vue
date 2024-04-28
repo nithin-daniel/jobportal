@@ -13,8 +13,6 @@ const addWork = async() => {
         email: localStorage.email,
         overview:overview ,
         youget:youget,
-
-        
     });
     console.log("Document written with ID: ", docRef.id);
 }
