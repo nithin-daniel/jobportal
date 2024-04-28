@@ -93,8 +93,8 @@ import { ref } from 'vue'
 import db from '../../firebase/firebase.js'
 import { getAuth, signInWithEmailAndPassword } from 'firebase/auth'
 import { useRouter } from 'vue-router' // import router
-import { getFirestore } from "firebase/firestore";
-import { collection, getDocs, addDoc } from "firebase/firestore";
+import { collection, getDocs, addDoc, query, where } from "firebase/firestore";
+import { getFirestore } from 'firebase/firestore'
 
 const email = ref('')
 const password = ref('')
@@ -108,7 +108,10 @@ const signIn = () => { // we also renamed this method
             console.log('Successfully logged in!');
             localStorage.setItem("user_email", data.user['email']);
             localStorage.setItem("user_status", true);
+        })
+        .then(async () => {
             router.push('/')
+
         })
         .catch(error => {
             switch (error.code) {
@@ -123,8 +126,26 @@ const signIn = () => { // we also renamed this method
                     break
                 default:
                     errMsg.value = 'Email or password was incorrect'
+                    router.push('/')
                     break
             }
         });
+    const getprofile = async () => {
+        const db = getFirestore();
+        const q = query(collection(db, "users"), where("email", "==", email.value));
+        console.log(q);
+        const querySnapshot = await getDocs(q);
+        querySnapshot.forEach((doc) => {
+            // doc.data() is never undefined for query doc snapshots
+            console.log(doc.id, " => ", doc.data());
+            localStorage.setItem("designation", doc.data().designation);
+            localStorage.setItem("profile_url", doc.data().profile_url);
+            localStorage.setItem("user_id", doc.data().user);
+            localStorage.setItem("user_email", email.value);
+            localStorage.setItem("user_status", true);
+        });
+
+    }
+    getprofile()
 }
 </script>
