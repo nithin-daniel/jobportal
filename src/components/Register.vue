@@ -151,7 +151,7 @@ const register = () => {
                 console.log('Uploaded profile picture!');
                 console.log(snapshot);
             })
-            const docRef = await addDoc(collection(dbnew, "sample"), {
+            const docRef = await addDoc(collection(dbnew, "users"), {
                 user: data.user.uid,
                 designation: isCompany.value ? 'company' : 'employer',
                 profile_url: `https://firebasestorage.googleapis.com/v0/b/jobportal-vuejs.appspot.com/o/images%2F${profilePicref.value.name}?alt=media&token=4b0f14f1-24bf-4f40-acb1-79a38534757e`
