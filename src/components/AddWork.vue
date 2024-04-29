@@ -14,9 +14,10 @@ const skills = ref('')
 const job_type = ref('')
 const job_name = ref('')
 const jobdescription = ref('')
-
+import { v4 as uuidv4 } from 'uuid';
 const addWork = async () => {
     const docRef = await addDoc(collection(db, "works"), { 
+        id:uuidv4(),
         name:localStorage.name,
         user: localStorage.user_id,
         email: localStorage.user_email,

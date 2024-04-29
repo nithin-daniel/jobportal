@@ -25,7 +25,7 @@ const routes = [
     {path:'/sample/:id',component:Sample},
     {path:'/jobs/',component:JobListing},
     {path:'/candidates/',component:CandidateListing},
-    {path:'/jobs-details/',component:JobDetails},
+    {path:'/jobs-details/:id',component:JobDetails},
     {path:'/login/',component:Login},
     {path:'/register/',component:Register},
     {path:'/add-work/',component:AddWork},
