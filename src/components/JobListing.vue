@@ -1,10 +1,38 @@
-<script setup>
+<script>
+import { getFirestore } from 'firebase/firestore'
+import { collection, getDocs, addDoc, query, where, limit } from "firebase/firestore";
+
 import Footer from './Footer.vue';
 import Navbar from './Navbar.vue';
+
+export default {
+    components: {
+        Footer,
+        Navbar
+    },
+    data() {
+        return {
+            arr: []
+        }
+    },
+    created() {
+        this.getprofile();
+    },
+    methods: {
+        async getprofile() {
+            const db = getFirestore();
+            const q = query(collection(db, "works"));
+            const querySnapshot = await getDocs(query(q));
+            querySnapshot.forEach((doc) => {
+                this.arr.push(doc.data());
+            });
+        }
+    }
+}
 </script>
 
 <template>
-    <Navbar/>
+    <Navbar />
     <!-- Breadcrumb Section Start -->
     <div class="breadcrumb-section section bg_color--5 pt-60 pt-sm-50 pt-xs-40 pb-60 pb-sm-50 pb-xs-40">
         <div class="container">
@@ -27,14 +55,11 @@ import Navbar from './Navbar.vue';
     <div class="job-listing-section section bg_color--5 pb-120 pb-lg-100 pb-md-80 pb-sm-60 pb-xs-50">
         <div class="container">
             <div class="row g-0">
-
-
-
                 <div class="col-lg-12 order-lg-2 order-1">
                     <div class="filter-form">
                         <div class="result-sorting">
                             <div class="total-result">
-                                <span class="total">(22)</span>
+                                <!-- <span class="total">(22)</span> -->
                                 Jobs &amp; Vacancies
                             </div>
                             <div class="job-alert-form">
@@ -81,51 +106,46 @@ import Navbar from './Navbar.vue';
                     <div class="tab-content">
                         <div id="list" class="tab-pane fade show active">
                             <div class="row">
-
-                                <div class="col-lg-12 mb-20">
+                                <div class="col-lg-12 mb-20" v-for="item in arr">
                                     <!-- Single Job Start  -->
                                     <div class="single-job style-two">
                                         <div class="info-top">
-                                            <div class="job-image">
+                                            <!-- <div class="job-image">
                                                 <a href="job-details.html">
                                                     <img src="../assets/images/companies_logo/logo-100/logo1.jpg"
                                                         alt="logo">
                                                 </a>
-                                            </div>
+                                            </div> -->
                                             <div class="job-info">
                                                 <div class="job-info-inner">
                                                     <div class="job-info-top">
                                                         <div class="saveJob for-listing">
-                                                            <span class="featured-label">featured</span>
-                                                            <a class="job-type-label ml-20 mr-20">Full Time</a>
+                                                            <!-- <span class="featured-label">featured</span> -->
+                                                            <!-- <a class="job-type-label ml-20 mr-20">Full Time</a> -->
+                                                            <div v-if="item.job_type === 'household'">
+                                                                <a class="job-type-label partTime ml-20 mr-20">House
+                                                                    Hold</a>
+                                                            </div>
+                                                            <div v-else>
+                                                                <a class="job-type-label partTime ml-20 mr-20">Part
+                                                                    Time</a>
+                                                            </div>
                                                             <a class="save-job" href="#quick-view-modal-container"
                                                                 data-toggle="modal">
-                                                                <i class="far fa-heart"></i>
+                                                                <!-- <i class="far fa-heart"></i> -->
                                                             </a>
                                                         </div>
                                                         <div class="title-name">
                                                             <h3 class="job-title">
-                                                                <a href="/jobs-details">Chief Accountant</a>
+                                                                <a href="/jobs-details">{{ item.job_name }}</a>
                                                             </h3>
                                                             <div class="employer-name">
-                                                                <a href="job-details.html">Shippo Company</a>
+                                                                <a href="job-details.html">{{ item.name }}</a>
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <div class="job-meta-two">
-                                                        <div class="field-salary_from">
-                                                            $500 - $1,000 / month
-                                                        </div>
-                                                        <div class="field-datetime"><i class="lnr lnr-clock"></i>8
-                                                            months ago</div>
-                                                        <div class="field-map"><i class="lnr lnr-map-marker"></i>Hanoi,
-                                                            Hanoi</div>
-                                                    </div>
                                                     <div class="job-skill-tag">
-                                                        <a href="#">Android</a>
-                                                        <a href="#">app</a>
-                                                        <a href="#">ReactJs</a>
-                                                        <a href="#">Ruby</a>
+                                                        <a href="">{{ item.skills }}</a>
                                                     </div>
                                                 </div>
                                             </div>
@@ -134,956 +154,7 @@ import Navbar from './Navbar.vue';
                                     <!-- Single Job End -->
                                 </div>
 
-                                <div class="col-lg-12 mb-20">
-                                    <!-- Single Job Start  -->
-                                    <div class="single-job style-two">
-                                        <div class="info-top">
-                                            <div class="job-image">
-                                                <a href="job-details.html">
-                                                    <img src="../assets/images/companies_logo/logo-100/logo2.jpg"
-                                                        alt="logo">
-                                                </a>
-                                            </div>
-                                            <div class="job-info">
-                                                <div class="job-info-inner">
-                                                    <div class="job-info-top">
-                                                        <div class="saveJob for-listing">
-                                                            <span class="featured-label">featured</span>
-                                                            <a class="job-type-label partTime ml-20 mr-20">Part
-                                                                Time</a>
-                                                            <a class="save-job" href="#quick-view-modal-container"
-                                                                data-toggle="modal">
-                                                                <i class="far fa-heart"></i>
-                                                            </a>
-                                                        </div>
-                                                        <div class="title-name">
-                                                            <h3 class="job-title">
-                                                                <a href="job-details.html">Senior Data Engineer</a>
-                                                            </h3>
-                                                            <div class="employer-name">
-                                                                <a href="employer-details.html">Radio Game</a>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="job-meta-two">
-                                                        <div class="field-salary_from">
-                                                            <i class="gj-icon gj-icon-money"></i>
-                                                            $500 - $1,000 / month
-                                                        </div>
-                                                        <div class="field-datetime"><i class="lnr lnr-clock"></i>8
-                                                            months ago</div>
-                                                        <div class="field-map"><i
-                                                                class="lnr lnr-map-marker"></i>Chicago, Illinois
-                                                        </div>
-                                                    </div>
-                                                    <div class="job-skill-tag">
-                                                        <a href="#">CSS</a>
-                                                        <a href="#">PHP</a>
-                                                        <a href="#">WordPress</a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!-- Single Job End -->
-                                </div>
-
-                                <div class="col-lg-12 mb-20">
-                                    <!-- Single Job Start  -->
-                                    <div class="single-job style-two">
-                                        <div class="info-top">
-                                            <div class="job-image">
-                                                <a href="job-details.html">
-                                                    <img src="../assets/images/companies_logo/logo-100/logo3.jpg"
-                                                        alt="logo">
-                                                </a>
-                                            </div>
-                                            <div class="job-info">
-                                                <div class="job-info-inner">
-                                                    <div class="job-info-top">
-                                                        <div class="saveJob for-listing">
-                                                            <a class="job-type-label ml-20 mr-20">Remote</a>
-                                                            <a class="save-job" href="#quick-view-modal-container"
-                                                                data-toggle="modal">
-                                                                <i class="far fa-heart"></i>
-                                                            </a>
-                                                        </div>
-                                                        <div class="title-name">
-                                                            <h3 class="job-title">
-                                                                <a href="job-details.html">Construction Worker</a>
-                                                            </h3>
-                                                            <div class="employer-name">
-                                                                <a href="employer-details.html">Digital Vine</a>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="job-meta-two">
-                                                        <div class="field-salary_from">
-                                                            <i class="gj-icon gj-icon-money"></i>
-                                                            $500 - $1,000 / month
-                                                        </div>
-                                                        <div class="field-datetime"><i class="lnr lnr-clock"></i>8
-                                                            months ago</div>
-                                                        <div class="field-map"><i
-                                                                class="lnr lnr-map-marker"></i>Chicago, Illinois
-                                                        </div>
-                                                    </div>
-                                                    <div class="job-skill-tag">
-                                                        <a href="#">Angular</a>
-                                                        <a href="#">ASP.NET</a>
-                                                        <a href="#">Banner</a>
-                                                        <a href="#">C++</a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!-- Single Job End -->
-                                </div>
-
-                                <div class="col-lg-12 mb-20">
-                                    <!-- Single Job Start  -->
-                                    <div class="single-job style-two">
-                                        <div class="info-top">
-                                            <div class="job-image">
-                                                <a href="job-details.html">
-                                                    <img src="../assets/images/companies_logo/logo-100/logo4.jpg"
-                                                        alt="logo">
-                                                </a>
-                                            </div>
-                                            <div class="job-info">
-                                                <div class="job-info-inner">
-                                                    <div class="job-info-top">
-                                                        <div class="saveJob for-listing">
-                                                            <span class="featured-label">featured</span>
-                                                            <a class="job-type-label ml-20 mr-20">Full Time</a>
-                                                            <a class="save-job" href="#quick-view-modal-container"
-                                                                data-toggle="modal">
-                                                                <i class="far fa-heart"></i>
-                                                            </a>
-                                                        </div>
-                                                        <div class="title-name">
-                                                            <h3 class="job-title">
-                                                                <a href="job-details.html">Unity Developer</a>
-                                                            </h3>
-                                                            <div class="employer-name">
-                                                                <a href="employer-details.html">Vsmarttech</a>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="job-meta-two">
-                                                        <div class="field-salary_from">
-                                                            <i class="gj-icon gj-icon-money"></i>
-                                                            $500 - $1,000 / month
-                                                        </div>
-                                                        <div class="field-datetime"><i class="lnr lnr-clock"></i>8
-                                                            months ago</div>
-                                                        <div class="field-map"><i class="lnr lnr-map-marker"></i>Hanoi,
-                                                            Hanoi</div>
-                                                    </div>
-                                                    <div class="job-skill-tag">
-                                                        <a href="#">NodeJS</a>
-                                                        <a href="#">PHP</a>
-                                                        <a href="#">Python</a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!-- Single Job End -->
-                                </div>
-
-                                <div class="col-lg-12 mb-20">
-                                    <!-- Single Job Start  -->
-                                    <div class="single-job style-two">
-                                        <div class="info-top">
-                                            <div class="job-image">
-                                                <a href="job-details.html">
-                                                    <img src="../assets/images/companies_logo/logo-100/logo5.jpg"
-                                                        alt="logo">
-                                                </a>
-                                            </div>
-                                            <div class="job-info">
-                                                <div class="job-info-inner">
-                                                    <div class="job-info-top">
-                                                        <div class="saveJob for-listing">
-                                                            <span class="featured-label">featured</span>
-                                                            <a class="job-type-label ml-20 mr-20">Full Time</a>
-                                                            <a class="save-job" href="#quick-view-modal-container"
-                                                                data-toggle="modal">
-                                                                <i class="far fa-heart"></i>
-                                                            </a>
-                                                        </div>
-                                                        <div class="title-name">
-                                                            <h3 class="job-title">
-                                                                <a href="job-details.html">Receptionist</a>
-                                                            </h3>
-                                                            <div class="employer-name">
-                                                                <a href="employer-details.html">Digital Vine</a>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="job-meta-two">
-                                                        <div class="field-salary_from">
-                                                            <i class="gj-icon gj-icon-money"></i>
-                                                            $500 - $1,000 / month
-                                                        </div>
-                                                        <div class="field-datetime"><i class="lnr lnr-clock"></i>8
-                                                            months ago</div>
-                                                        <div class="field-map"><i class="lnr lnr-map-marker"></i>Hanoi,
-                                                            Hanoi</div>
-                                                    </div>
-                                                    <div class="job-skill-tag">
-                                                        <a href="#">Android</a>
-                                                        <a href="#">app</a>
-                                                        <a href="#">ReactJs</a>
-                                                        <a href="#">Ruby</a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!-- Single Job End -->
-                                </div>
-
-                                <div class="col-lg-12 mb-20">
-                                    <!-- Single Job Start  -->
-                                    <div class="single-job style-two">
-                                        <div class="info-top">
-                                            <div class="job-image">
-                                                <a href="job-details.html">
-                                                    <img src="../assets/images/companies_logo/logo-100/logo6.jpg"
-                                                        alt="logo">
-                                                </a>
-                                            </div>
-                                            <div class="job-info">
-                                                <div class="job-info-inner">
-                                                    <div class="job-info-top">
-                                                        <div class="saveJob for-listing">
-                                                            <span class="featured-label">featured</span>
-                                                            <a class="job-type-label ml-20 mr-20">Full Time</a>
-                                                            <a class="save-job" href="#quick-view-modal-container"
-                                                                data-toggle="modal">
-                                                                <i class="far fa-heart"></i>
-                                                            </a>
-                                                        </div>
-                                                        <div class="title-name">
-                                                            <h3 class="job-title">
-                                                                <a href="job-details.html">iOS Developer</a>
-                                                            </h3>
-                                                            <div class="employer-name">
-                                                                <a href="employer-details.html">InwaveThemes</a>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="job-meta-two">
-                                                        <div class="field-salary_from">
-                                                            <i class="gj-icon gj-icon-money"></i>
-                                                            $500 - $1,000 / month
-                                                        </div>
-                                                        <div class="field-datetime"><i class="lnr lnr-clock"></i>8
-                                                            months ago</div>
-                                                        <div class="field-map"><i
-                                                                class="lnr lnr-map-marker"></i>Seville, Andalusia
-                                                        </div>
-                                                    </div>
-                                                    <div class="job-skill-tag">
-                                                        <a href="#">app</a>
-                                                        <a href="#">ios</a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!-- Single Job End -->
-                                </div>
-
-                                <div class="col-lg-12 mb-20">
-                                    <!-- Single Job Start  -->
-                                    <div class="single-job style-two">
-                                        <div class="info-top">
-                                            <div class="job-image">
-                                                <a href="job-details.html">
-                                                    <img src="../assets/images/companies_logo/logo-100/logo2.jpg"
-                                                        alt="logo">
-                                                </a>
-                                            </div>
-                                            <div class="job-info">
-                                                <div class="job-info-inner">
-                                                    <div class="job-info-top">
-                                                        <div class="saveJob for-listing">
-                                                            <span class="featured-label">featured</span>
-                                                            <a class="job-type-label partTime ml-20 mr-20">Part
-                                                                Time</a>
-                                                            <a class="save-job" href="#quick-view-modal-container"
-                                                                data-toggle="modal">
-                                                                <i class="far fa-heart"></i>
-                                                            </a>
-                                                        </div>
-                                                        <div class="title-name">
-                                                            <h3 class="job-title">
-                                                                <a href="job-details.html">Senior Data Engineer</a>
-                                                            </h3>
-                                                            <div class="employer-name">
-                                                                <a href="employer-details.html">Radio Game</a>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="job-meta-two">
-                                                        <div class="field-salary_from">
-                                                            <i class="gj-icon gj-icon-money"></i>
-                                                            $500 - $1,000 / month
-                                                        </div>
-                                                        <div class="field-datetime"><i class="lnr lnr-clock"></i>8
-                                                            months ago</div>
-                                                        <div class="field-map"><i
-                                                                class="lnr lnr-map-marker"></i>Chicago, Illinois
-                                                        </div>
-                                                    </div>
-                                                    <div class="job-skill-tag">
-                                                        <a href="#">CSS</a>
-                                                        <a href="#">PHP</a>
-                                                        <a href="#">WordPress</a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!-- Single Job End -->
-                                </div>
-
-                                <div class="col-lg-12 mb-20">
-                                    <!-- Single Job Start  -->
-                                    <div class="single-job style-two">
-                                        <div class="info-top">
-                                            <div class="job-image">
-                                                <a href="job-details.html">
-                                                    <img src="../assets/images/companies_logo/logo-100/logo3.jpg"
-                                                        alt="logo">
-                                                </a>
-                                            </div>
-                                            <div class="job-info">
-                                                <div class="job-info-inner">
-                                                    <div class="job-info-top">
-                                                        <div class="saveJob for-listing">
-                                                            <a class="job-type-label ml-20 mr-20">Remote</a>
-                                                            <a class="save-job" href="#quick-view-modal-container"
-                                                                data-toggle="modal">
-                                                                <i class="far fa-heart"></i>
-                                                            </a>
-                                                        </div>
-                                                        <div class="title-name">
-                                                            <h3 class="job-title">
-                                                                <a href="job-details.html">Construction Worker</a>
-                                                            </h3>
-                                                            <div class="employer-name">
-                                                                <a href="employer-details.html">Digital Vine</a>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="job-meta-two">
-                                                        <div class="field-salary_from">
-                                                            <i class="gj-icon gj-icon-money"></i>
-                                                            $500 - $1,000 / month
-                                                        </div>
-                                                        <div class="field-datetime"><i class="lnr lnr-clock"></i>8
-                                                            months ago</div>
-                                                        <div class="field-map"><i
-                                                                class="lnr lnr-map-marker"></i>Chicago, Illinois
-                                                        </div>
-                                                    </div>
-                                                    <div class="job-skill-tag">
-                                                        <a href="#">Angular</a>
-                                                        <a href="#">ASP.NET</a>
-                                                        <a href="#">Banner</a>
-                                                        <a href="#">C++</a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!-- Single Job End -->
-                                </div>
-
-                                <div class="col-lg-12 mb-20">
-                                    <!-- Single Job Start  -->
-                                    <div class="single-job style-two">
-                                        <div class="info-top">
-                                            <div class="job-image">
-                                                <a href="job-details.html">
-                                                    <img src="../assets/images/companies_logo/logo-100/logo4.jpg"
-                                                        alt="logo">
-                                                </a>
-                                            </div>
-                                            <div class="job-info">
-                                                <div class="job-info-inner">
-                                                    <div class="job-info-top">
-                                                        <div class="saveJob for-listing">
-                                                            <span class="featured-label">featured</span>
-                                                            <a class="job-type-label ml-20 mr-20">Full Time</a>
-                                                            <a class="save-job" href="#quick-view-modal-container"
-                                                                data-toggle="modal">
-                                                                <i class="far fa-heart"></i>
-                                                            </a>
-                                                        </div>
-                                                        <div class="title-name">
-                                                            <h3 class="job-title">
-                                                                <a href="job-details.html">Unity Developer</a>
-                                                            </h3>
-                                                            <div class="employer-name">
-                                                                <a href="employer-details.html">Vsmarttech</a>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="job-meta-two">
-                                                        <div class="field-salary_from">
-                                                            <i class="gj-icon gj-icon-money"></i>
-                                                            $500 - $1,000 / month
-                                                        </div>
-                                                        <div class="field-datetime"><i class="lnr lnr-clock"></i>8
-                                                            months ago</div>
-                                                        <div class="field-map"><i class="lnr lnr-map-marker"></i>Hanoi,
-                                                            Hanoi</div>
-                                                    </div>
-                                                    <div class="job-skill-tag">
-                                                        <a href="#">NodeJS</a>
-                                                        <a href="#">PHP</a>
-                                                        <a href="#">Python</a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!-- Single Job End -->
-                                </div>
-
-                               
-
-                            </div>
-                            <!-- <div class="row">
-                                    <div class="col-12">
-                                        <ul class="page-pagination">
-                                            <li><a href="#"><i class="fa fa-angle-left"></i></a></li>
-                                            <li class="active"><a href="#">1</a></li>
-                                            <li><a href="#">2</a></li>
-                                            <li><a href="#">3</a></li>
-                                            <li><a href="#"><i class="fa fa-angle-right"></i></a></li>
-                                        </ul>
-                                    </div>
-                                </div> -->
-                        </div>
-                        <div id="grid" class="tab-pane fade">
-                            <div class="row">
-
-                                <div class="col-md-6 mb-20">
-                                    <!-- Single Job Start  -->
-                                    <div class="single-job-grid-two">
-                                        <div class="saveJob-grid">
-                                            <a class="job-type-label remote" href="#">Remote</a>
-                                            <a class="save-job" href="#quick-view-modal-container" data-toggle="modal">
-                                                <i class="far fa-heart"></i>Save </a>
-                                        </div>
-                                        <div class="job-image">
-                                            <a href="job-details.html">
-                                                <img src="../assets/images/companies_logo/logo-100/logo1.jpg" alt="">
-                                            </a>
-                                            <span class="featured-label for-grid">featured</span>
-                                        </div>
-                                        <div class="job-info">
-                                            <div class="job-info-top">
-                                                <div class="title-name">
-                                                    <h3 class="job-title">
-                                                        <a href="job-details.html">Chief Accountant</a>
-                                                    </h3>
-                                                    <div class="employer-name">
-                                                        <a href="employer-details.html">Shippo Company</a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="job-meta-two">
-                                                <div class="field-salary_from">
-                                                    <i class="gj-icon gj-icon-money"></i>
-                                                    $500 - $1,000 / month
-                                                </div>
-                                                <div class="field-datetime"><i class="lnr lnr-clock"></i>8 months
-                                                    ago</div>
-                                                <div class="field-map"><i class="lnr lnr-map-marker"></i>Hanoi,
-                                                    Hanoi</div>
-                                            </div>
-                                            <div class="field-descriptions">
-                                                <p>International collaborative, high-energy environmentCompetitive
-                                                    salary and great benefits, English training provided About Our
-                                                    Client Our…</p>
-                                            </div>
-                                            <div class="job-skill-tag">
-                                                <a href="#">Android</a>
-                                                <a href="#">app</a>
-                                                <a href="#">ReactJs</a>
-                                                <a href="#">Ruby</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!-- Single Job End -->
-                                </div>
-
-                                <div class="col-md-6 mb-20">
-                                    <!-- Single Job Start  -->
-                                    <div class="single-job-grid-two">
-                                        <div class="saveJob-grid">
-                                            <a class="job-type-label" href="#">Full Time</a>
-                                            <a class="save-job" href="#quick-view-modal-container" data-toggle="modal">
-                                                <i class="far fa-heart"></i>Save </a>
-                                        </div>
-                                        <div class="job-image">
-                                            <a href="job-details.html">
-                                                <img src="../assets/images/companies_logo/logo-100/logo2.jpg" alt="">
-                                            </a>
-                                            <span class="featured-label for-grid">featured</span>
-                                        </div>
-                                        <div class="job-info">
-                                            <div class="job-info-top">
-                                                <div class="title-name">
-                                                    <h3 class="job-title">
-                                                        <a href="job-details.html">Android & IOS Developer</a>
-                                                    </h3>
-                                                    <div class="employer-name">
-                                                        <a href="employer-details.html">Inwave Studio</a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="job-meta-two">
-                                                <div class="field-salary_from">
-                                                    <i class="gj-icon gj-icon-money"></i>
-                                                    $500 - $1,000 / month
-                                                </div>
-                                                <div class="field-datetime"><i class="lnr lnr-clock"></i>8 months
-                                                    ago</div>
-                                                <div class="field-map"><i class="lnr lnr-map-marker"></i>Hanoi,
-                                                    Hanoi</div>
-                                            </div>
-                                            <div class="field-descriptions">
-                                                <p>International collaborative, high-energy environmentCompetitive
-                                                    salary and great benefits, English training provided About Our
-                                                    Client Our…</p>
-                                            </div>
-                                            <div class="job-skill-tag">
-                                                <a href="#">Android</a>
-                                                <a href="#">app</a>
-                                                <a href="#">ReactJs</a>
-                                                <a href="#">Ruby</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!-- Single Job End -->
-                                </div>
-
-                                <div class="col-md-6 mb-20">
-                                    <!-- Single Job Start  -->
-                                    <div class="single-job-grid-two">
-                                        <div class="saveJob-grid">
-                                            <a class="job-type-label" href="#">Full Time</a>
-                                            <a class="save-job" href="#quick-view-modal-container" data-toggle="modal">
-                                                <i class="far fa-heart"></i>Save </a>
-                                        </div>
-                                        <div class="job-image">
-                                            <a href="job-details.html">
-                                                <img src="../assets/images/companies_logo/logo-100/logo3.jpg" alt="">
-                                            </a>
-                                            <span class="featured-label for-grid">featured</span>
-                                        </div>
-                                        <div class="job-info">
-                                            <div class="job-info-top">
-                                                <div class="title-name">
-                                                    <h3 class="job-title">
-                                                        <a href="job-details.html">Construction Worker</a>
-                                                    </h3>
-                                                    <div class="employer-name">
-                                                        <a href="employer-details.html">Digital Vine</a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="job-meta-two">
-                                                <div class="field-salary_from">
-                                                    <i class="gj-icon gj-icon-money"></i>
-                                                    $500 - $1,000 / month
-                                                </div>
-                                                <div class="field-datetime"><i class="lnr lnr-clock"></i>8 months
-                                                    ago</div>
-                                                <div class="field-map"><i class="lnr lnr-map-marker"></i>Hanoi,
-                                                    Hanoi</div>
-                                            </div>
-                                            <div class="field-descriptions">
-                                                <p>International collaborative, high-energy environmentCompetitive
-                                                    salary and great benefits, English training provided About Our
-                                                    Client Our…</p>
-                                            </div>
-                                            <div class="job-skill-tag">
-                                                <a href="#">Android</a>
-                                                <a href="#">app</a>
-                                                <a href="#">ReactJs</a>
-                                                <a href="#">Ruby</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!-- Single Job End -->
-                                </div>
-
-                                <div class="col-md-6 mb-20">
-                                    <!-- Single Job Start  -->
-                                    <div class="single-job-grid-two">
-                                        <div class="saveJob-grid">
-                                            <a class="job-type-label" href="#">Full Time</a>
-                                            <a class="save-job" href="#quick-view-modal-container" data-toggle="modal">
-                                                <i class="far fa-heart"></i>Save </a>
-                                        </div>
-                                        <div class="job-image">
-                                            <a href="job-details.html">
-                                                <img src="../assets/images/companies_logo/logo-100/logo4.jpg" alt="">
-                                            </a>
-                                            <span class="featured-label for-grid">featured</span>
-                                        </div>
-                                        <div class="job-info">
-                                            <div class="job-info-top">
-                                                <div class="title-name">
-                                                    <h3 class="job-title">
-                                                        <a href="job-details.html">IOS & Android Developer</a>
-                                                    </h3>
-                                                    <div class="employer-name">
-                                                        <a href="employer-details.html">Radio Game</a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="job-meta-two">
-                                                <div class="field-salary_from">
-                                                    <i class="gj-icon gj-icon-money"></i>
-                                                    $500 - $1,000 / month
-                                                </div>
-                                                <div class="field-datetime"><i class="lnr lnr-clock"></i>8 months
-                                                    ago</div>
-                                                <div class="field-map"><i class="lnr lnr-map-marker"></i>Hanoi,
-                                                    Hanoi</div>
-                                            </div>
-                                            <div class="field-descriptions">
-                                                <p>International collaborative, high-energy environmentCompetitive
-                                                    salary and great benefits, English training provided About Our
-                                                    Client Our…</p>
-                                            </div>
-                                            <div class="job-skill-tag">
-                                                <a href="#">Android</a>
-                                                <a href="#">app</a>
-                                                <a href="#">ReactJs</a>
-                                                <a href="#">Ruby</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!-- Single Job End -->
-                                </div>
-
-                                <div class="col-md-6 mb-20">
-                                    <!-- Single Job Start  -->
-                                    <div class="single-job-grid-two">
-                                        <div class="saveJob-grid">
-                                            <a class="job-type-label" href="#">Full Time</a>
-                                            <a class="save-job" href="#quick-view-modal-container" data-toggle="modal">
-                                                <i class="far fa-heart"></i>Save </a>
-                                        </div>
-                                        <div class="job-image">
-                                            <a href="job-details.html">
-                                                <img src="../assets/images/companies_logo/logo-100/logo5.jpg" alt="">
-                                            </a>
-                                            <span class="featured-label for-grid">featured</span>
-                                        </div>
-                                        <div class="job-info">
-                                            <div class="job-info-top">
-                                                <div class="title-name">
-                                                    <h3 class="job-title">
-                                                        <a href="job-details.html">Jr. Developer Shopify</a>
-                                                    </h3>
-                                                    <div class="employer-name">
-                                                        <a href="employer-details.html">InwaveThemes</a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="job-meta-two">
-                                                <div class="field-salary_from">
-                                                    <i class="gj-icon gj-icon-money"></i>
-                                                    $500 - $1,000 / month
-                                                </div>
-                                                <div class="field-datetime"><i class="lnr lnr-clock"></i>8 months
-                                                    ago</div>
-                                                <div class="field-map"><i class="lnr lnr-map-marker"></i>Hanoi,
-                                                    Hanoi</div>
-                                            </div>
-                                            <div class="field-descriptions">
-                                                <p>International collaborative, high-energy environmentCompetitive
-                                                    salary and great benefits, English training provided About Our
-                                                    Client Our…</p>
-                                            </div>
-                                            <div class="job-skill-tag">
-                                                <a href="#">Android</a>
-                                                <a href="#">app</a>
-                                                <a href="#">ReactJs</a>
-                                                <a href="#">Ruby</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!-- Single Job End -->
-                                </div>
-
-                                <div class="col-md-6 mb-20">
-                                    <!-- Single Job Start  -->
-                                    <div class="single-job-grid-two">
-                                        <div class="saveJob-grid">
-                                            <a class="job-type-label" href="#">Full Time</a>
-                                            <a class="save-job" href="#quick-view-modal-container" data-toggle="modal">
-                                                <i class="far fa-heart"></i>Save </a>
-                                        </div>
-                                        <div class="job-image">
-                                            <a href="job-details.html">
-                                                <img src="../assets/images/companies_logo/logo-100/logo6.jpg" alt="">
-                                            </a>
-                                            <span class="featured-label for-grid">featured</span>
-                                        </div>
-                                        <div class="job-info">
-                                            <div class="job-info-top">
-                                                <div class="title-name">
-                                                    <h3 class="job-title">
-                                                        <a href="job-details.html">Receptionist</a>
-                                                    </h3>
-                                                    <div class="employer-name">
-                                                        <a href="employer-details.html">Digital Vine</a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="job-meta-two">
-                                                <div class="field-salary_from">
-                                                    <i class="gj-icon gj-icon-money"></i>
-                                                    $500 - $1,000 / month
-                                                </div>
-                                                <div class="field-datetime"><i class="lnr lnr-clock"></i>8 months
-                                                    ago</div>
-                                                <div class="field-map"><i class="lnr lnr-map-marker"></i>Hanoi,
-                                                    Hanoi</div>
-                                            </div>
-                                            <div class="field-descriptions">
-                                                <p>International collaborative, high-energy environmentCompetitive
-                                                    salary and great benefits, English training provided About Our
-                                                    Client Our…</p>
-                                            </div>
-                                            <div class="job-skill-tag">
-                                                <a href="#">Android</a>
-                                                <a href="#">app</a>
-                                                <a href="#">ReactJs</a>
-                                                <a href="#">Ruby</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!-- Single Job End -->
-                                </div>
-
-                                <div class="col-md-6 mb-20">
-                                    <!-- Single Job Start  -->
-                                    <div class="single-job-grid-two">
-                                        <div class="saveJob-grid">
-                                            <a class="job-type-label internship" href="#">Internship</a>
-                                            <a class="save-job" href="#quick-view-modal-container" data-toggle="modal">
-                                                <i class="far fa-heart"></i>Save </a>
-                                        </div>
-                                        <div class="job-image">
-                                            <a href="job-details.html">
-                                                <img src="../assets/images/companies_logo/logo-100/logo2.jpg" alt="">
-                                            </a>
-                                            <span class="featured-label for-grid">featured</span>
-                                        </div>
-                                        <div class="job-info">
-                                            <div class="job-info-top">
-                                                <div class="title-name">
-                                                    <h3 class="job-title">
-                                                        <a href="job-details.html">Recreation & Fitness Worker</a>
-                                                    </h3>
-                                                    <div class="employer-name">
-                                                        <a href="employer-details.html">Digital Asset</a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="job-meta-two">
-                                                <div class="field-salary_from">
-                                                    <i class="gj-icon gj-icon-money"></i>
-                                                    $500 - $1,000 / month
-                                                </div>
-                                                <div class="field-datetime"><i class="lnr lnr-clock"></i>8 months
-                                                    ago</div>
-                                                <div class="field-map"><i class="lnr lnr-map-marker"></i>Hanoi,
-                                                    Hanoi</div>
-                                            </div>
-                                            <div class="field-descriptions">
-                                                <p>International collaborative, high-energy environmentCompetitive
-                                                    salary and great benefits, English training provided About Our
-                                                    Client Our…</p>
-                                            </div>
-                                            <div class="job-skill-tag">
-                                                <a href="#">Android</a>
-                                                <a href="#">app</a>
-                                                <a href="#">ReactJs</a>
-                                                <a href="#">Ruby</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!-- Single Job End -->
-                                </div>
-
-                                <div class="col-md-6 mb-20">
-                                    <!-- Single Job Start  -->
-                                    <div class="single-job-grid-two">
-                                        <div class="saveJob-grid">
-                                            <a class="job-type-label" href="#">Full Time</a>
-                                            <a class="save-job" href="#quick-view-modal-container" data-toggle="modal">
-                                                <i class="far fa-heart"></i>Save </a>
-                                        </div>
-                                        <div class="job-image">
-                                            <a href="job-details.html">
-                                                <img src="../assets/images/companies_logo/logo-100/logo5.jpg" alt="">
-                                            </a>
-                                            <span class="featured-label for-grid">featured</span>
-                                        </div>
-                                        <div class="job-info">
-                                            <div class="job-info-top">
-                                                <div class="title-name">
-                                                    <h3 class="job-title">
-                                                        <a href="job-details.html">Senior Data Engineer</a>
-                                                    </h3>
-                                                    <div class="employer-name">
-                                                        <a href="employer-details.html">Radio Game</a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="job-meta-two">
-                                                <div class="field-salary_from">
-                                                    <i class="gj-icon gj-icon-money"></i>
-                                                    $500 - $1,000 / month
-                                                </div>
-                                                <div class="field-datetime"><i class="lnr lnr-clock"></i>8 months
-                                                    ago</div>
-                                                <div class="field-map"><i class="lnr lnr-map-marker"></i>Hanoi,
-                                                    Hanoi</div>
-                                            </div>
-                                            <div class="field-descriptions">
-                                                <p>International collaborative, high-energy environmentCompetitive
-                                                    salary and great benefits, English training provided About Our
-                                                    Client Our…</p>
-                                            </div>
-                                            <div class="job-skill-tag">
-                                                <a href="#">Android</a>
-                                                <a href="#">app</a>
-                                                <a href="#">ReactJs</a>
-                                                <a href="#">Ruby</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!-- Single Job End -->
-                                </div>
-
-                                <div class="col-md-6 mb-20">
-                                    <!-- Single Job Start  -->
-                                    <div class="single-job-grid-two">
-                                        <div class="saveJob-grid">
-                                            <a class="job-type-label remote" href="#">Remote</a>
-                                            <a class="save-job" href="#quick-view-modal-container" data-toggle="modal">
-                                                <i class="far fa-heart"></i>Save </a>
-                                        </div>
-                                        <div class="job-image">
-                                            <a href="job-details.html">
-                                                <img src="../assets/images/companies_logo/logo-100/logo3.jpg" alt="">
-                                            </a>
-                                            <span class="featured-label for-grid">featured</span>
-                                        </div>
-                                        <div class="job-info">
-                                            <div class="job-info-top">
-                                                <div class="title-name">
-                                                    <h3 class="job-title">
-                                                        <a href="job-details.html">Senior PHP Web Developer</a>
-                                                    </h3>
-                                                    <div class="employer-name">
-                                                        <a href="employer-details.html">InwaveThemes</a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="job-meta-two">
-                                                <div class="field-salary_from">
-                                                    <i class="gj-icon gj-icon-money"></i>
-                                                    $500 - $1,000 / month
-                                                </div>
-                                                <div class="field-datetime"><i class="lnr lnr-clock"></i>8 months
-                                                    ago</div>
-                                                <div class="field-map"><i class="lnr lnr-map-marker"></i>Hanoi,
-                                                    Hanoi</div>
-                                            </div>
-                                            <div class="field-descriptions">
-                                                <p>International collaborative, high-energy environmentCompetitive
-                                                    salary and great benefits, English training provided About Our
-                                                    Client Our…</p>
-                                            </div>
-                                            <div class="job-skill-tag">
-                                                <a href="#">Android</a>
-                                                <a href="#">app</a>
-                                                <a href="#">ReactJs</a>
-                                                <a href="#">Ruby</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!-- Single Job End -->
-                                </div>
-
-                                <div class="col-md-6 mb-20">
-                                    <!-- Single Job Start  -->
-                                    <div class="single-job-grid-two">
-                                        <div class="saveJob-grid">
-                                            <a class="job-type-label" href="#">Full Time</a>
-                                            <a class="save-job" href="#quick-view-modal-container" data-toggle="modal">
-                                                <i class="far fa-heart"></i>Save </a>
-                                        </div>
-                                        <div class="job-image">
-                                            <a href="job-details.html">
-                                                <img src="../assets/images/companies_logo/logo-100/logo1.jpg" alt="">
-                                            </a>
-                                            <span class="featured-label for-grid">featured</span>
-                                        </div>
-                                        <div class="job-info">
-                                            <div class="job-info-top">
-                                                <div class="title-name">
-                                                    <h3 class="job-title">
-                                                        <a href="job-details.html">Tax Manager</a>
-                                                    </h3>
-                                                    <div class="employer-name">
-                                                        <a href="employer-details.html">HasThemes</a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="job-meta-two">
-                                                <div class="field-salary_from">
-                                                    <i class="gj-icon gj-icon-money"></i>
-                                                    $500 - $1,000 / month
-                                                </div>
-                                                <div class="field-datetime"><i class="lnr lnr-clock"></i>8 months
-                                                    ago</div>
-                                                <div class="field-map"><i class="lnr lnr-map-marker"></i>Hanoi,
-                                                    Hanoi</div>
-                                            </div>
-                                            <div class="field-descriptions">
-                                                <p>International collaborative, high-energy environmentCompetitive
-                                                    salary and great benefits, English training provided About Our
-                                                    Client Our…</p>
-                                            </div>
-                                            <div class="job-skill-tag">
-                                                <a href="#">Android</a>
-                                                <a href="#">app</a>
-                                                <a href="#">ReactJs</a>
-                                                <a href="#">Ruby</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!-- Single Job End -->
-                                </div>
+                                
 
 
                             </div>
@@ -1107,5 +178,5 @@ import Navbar from './Navbar.vue';
         </div>
     </div>
     <!-- Job Listing Section End -->
-    <Footer/>
+    <Footer />
 </template>

@@ -133,16 +133,16 @@ const signIn = () => { // we also renamed this method
     const getprofile = async () => {
         const db = getFirestore();
         const q = query(collection(db, "users"), where("email", "==", email.value));
-        console.log(q);
         const querySnapshot = await getDocs(q);
         querySnapshot.forEach((doc) => {
+            console.log(doc.data().full_name);
             // doc.data() is never undefined for query doc snapshots
-            console.log(doc.id, " => ", doc.data());
             localStorage.setItem("designation", doc.data().designation);
             localStorage.setItem("profile_url", doc.data().profile_url);
             localStorage.setItem("user_id", doc.data().user);
             localStorage.setItem("user_email", email.value);
             localStorage.setItem("user_status", true);
+            localStorage.setItem("name",doc.data().full_name);
         });
 
     }

@@ -1,6 +1,37 @@
-<script setup>
+<script>
 import Footer from './Footer.vue';
 import Navbar from './Navbar.vue';
+
+import { collection, getDocs, addDoc, query, where,limit } from "firebase/firestore";
+import { getFirestore } from 'firebase/firestore'
+
+
+export default {
+    components: {
+        Footer,
+        Navbar
+    },
+    data() {
+        return {
+            arr: []
+        }
+    },
+    created() {
+        this.getprofile();
+    },
+    methods: {
+        async getprofile() {
+            const db = getFirestore();
+            const q = query(collection(db, "works"));
+            const querySnapshot = await getDocs(query(q,limit(10)));
+            querySnapshot.forEach((doc) => {
+                const documentWithId = { id: doc.id, ...doc.data() };
+                this.arr.push(documentWithId);
+            });
+        }
+    }
+}
+
 </script>
 
 
@@ -45,10 +76,10 @@ import Navbar from './Navbar.vue';
                     </div>
                     <div class="content-popup-scroll">
                         <ul class="list-item">
-                            <li><a href="login-register.html"><i class="lnr lnr-book"></i><span><b
+                            <li><a href=""><i class="lnr lnr-book"></i><span><b
                                             class="highlight">Register now</b> to reach dream jobs easier.</span> </a>
                             </li>
-                            <li><a href="job-with-map.html"><i class="lnr lnr-book"></i><span><b class="highlight">Job
+                            <li><a href=""><i class="lnr lnr-book"></i><span><b class="highlight">Job
                                             suggestion</b> you might be interested based on your profile.</span> </a>
                             </li>
                         </ul>
@@ -184,182 +215,17 @@ import Navbar from './Navbar.vue';
                         </div>
                     </div>
                     <div class="row row-five-column g-0 border-top-left">
-                        <div class="col-xl-2 col-lg-3 col-md-6 col-sm-6">
+                        <div class="col-xl-2 col-lg-3 col-md-6 col-sm-6" v-for="item in arr" :key="item.id">
                             <!-- Single Employer Item Start -->
                             <div class="employer-item item-border-bottom">
-                                <span class="featured-employer-label">Featured</span>
+                                <span class="featured-employer-label">{{ item.designation }}</span>
                                 <div class="employer-image">
-                                    <img src="../assets/images/companies_logo/logo-1.jpg" alt="">
+                                    <img :src= "item.profile_pic" alt="">
                                 </div>
                                 <div class="employer-info-top">
                                     <span class="employer-location"><i class="lnr lnr-map-marker"></i> Beijing,
                                         Beijing</span>
-                                    <h3 class="employer-name"><a href="/sample/lk">Digital Asset</a></h3>
-                                </div>
-                            </div>
-                            <!-- Single Employer Item End -->
-                        </div>
-
-                        <div class="col-xl-2 col-lg-3 col-md-6 col-sm-6">
-                            <!-- Single Employer Item Start -->
-                            <div class="employer-item item-border-bottom">
-                                <div class="employer-image">
-                                    <img src="../assets/images/companies_logo/logo-2.jpg" alt="">
-                                </div>
-                                <div class="employer-info-top">
-                                    <span class="employer-location"><i class="lnr lnr-map-marker"></i> Victoria</span>
-                                    <h3 class="employer-name"><a href="employer-details.html">Liquididea Design</a></h3>
-                                </div>
-                            </div>
-                            <!-- Single Employer Item End -->
-                        </div>
-
-                        <div class="col-xl-2 col-lg-3 col-md-6 col-sm-6">
-                            <!-- Single Employer Item Start -->
-                            <div class="employer-item item-border-bottom">
-                                <span class="featured-employer-label">Featured</span>
-                                <div class="rating">
-                                    <span class="rating-point">4.3</span>
-                                </div>
-                                <div class="employer-image">
-                                    <img src="../assets/images/companies_logo/logo-3.jpg" alt="">
-                                </div>
-                                <div class="employer-info-top">
-                                    <span class="employer-location"><i class="lnr lnr-map-marker"></i> Osaka,
-                                        Osaka</span>
-                                    <h3 class="employer-name"><a href="employer-details.html">Shippo Company</a></h3>
-                                </div>
-                            </div>
-                            <!-- Single Employer Item End -->
-                        </div>
-
-                        <div class="col-xl-2 col-lg-3 col-md-6 col-sm-6">
-                            <!-- Single Employer Item Start -->
-                            <div class="employer-item item-border-bottom">
-                                <span class="featured-employer-label">Featured</span>
-                                <div class="rating">
-                                    <span class="rating-point">1.7</span>
-                                </div>
-                                <div class="employer-image">
-                                    <img src="../assets/images/companies_logo/logo-4.jpg" alt="">
-                                </div>
-                                <div class="employer-info-top">
-                                    <span class="employer-location"><i class="lnr lnr-map-marker"></i> Chicago,
-                                        California</span>
-                                    <h3 class="employer-name"><a href="employer-details.html">Alpha Investing <i
-                                                class="fas fa-check-circle"></i></a></h3>
-                                </div>
-                            </div>
-                            <!-- Single Employer Item End -->
-                        </div>
-
-                        <div class="col-xl-2 col-lg-3 col-md-6 col-sm-6">
-                            <!-- Single Employer Item Start -->
-                            <div class="employer-item item-border-bottom">
-                                <span class="featured-employer-label">Featured</span>
-                                <div class="rating">
-                                    <span class="rating-point">5.0</span>
-                                </div>
-                                <div class="employer-image">
-                                    <img src="../assets/images/companies_logo/logo-5.jpg" alt="">
-                                </div>
-                                <div class="employer-info-top">
-                                    <span class="employer-location"><i class="lnr lnr-map-marker"></i> New York, New
-                                        York</span>
-                                    <h3 class="employer-name"><a href="employer-details.html">Radio Game</a></h3>
-                                </div>
-                            </div>
-                            <!-- Single Employer Item End -->
-                        </div>
-
-                        <div class="col-xl-2 col-lg-3 col-md-6 col-sm-6">
-                            <!-- Single Employer Item Start -->
-                            <div class="employer-item item-border-bottom">
-                                <div class="rating">
-                                    <span class="rating-point">4.0</span>
-                                </div>
-                                <div class="employer-image">
-                                    <img src="../assets/images/companies_logo/logo-6.jpg" alt="">
-                                </div>
-                                <div class="employer-info-top">
-                                    <span class="employer-location"><i class="lnr lnr-map-marker"></i>Seville,
-                                        Andalusia</span>
-                                    <h3 class="employer-name"><a href="employer-details.html">Digital Vine <i
-                                                class="fas fa-check-circle"></i></a></h3>
-                                </div>
-                            </div>
-                            <!-- Single Employer Item End -->
-                        </div>
-
-                        <div class="col-xl-2 col-lg-3 col-md-6 col-sm-6">
-                            <!-- Single Employer Item Start -->
-                            <div class="employer-item item-border-bottom">
-                                <span class="featured-employer-label">Featured</span>
-                                <div class="rating">
-                                    <span class="rating-point">5.0</span>
-                                </div>
-                                <div class="employer-image">
-                                    <img src="../assets/images/companies_logo/logo-7.jpg" alt="">
-                                </div>
-                                <div class="employer-info-top">
-                                    <span class="employer-location"><i class="lnr lnr-map-marker"></i> London,
-                                        England</span>
-                                    <h3 class="employer-name"><a href="employer-details.html">Vsmarttech</a></h3>
-                                </div>
-                            </div>
-                            <!-- Single Employer Item End -->
-                        </div>
-
-                        <div class="col-xl-2 col-lg-3 col-md-6 col-sm-6">
-                            <!-- Single Employer Item Start -->
-                            <div class="employer-item item-border-bottom">
-                                <div class="rating">
-                                    <span class="rating-point">3.9</span>
-                                </div>
-                                <div class="employer-image">
-                                    <img src="../assets/images/companies_logo/logo-8.jpg" alt="">
-                                </div>
-                                <div class="employer-info-top">
-                                    <span class="employer-location"><i class="lnr lnr-map-marker"></i> Hamburg,
-                                        Hamburg</span>
-                                    <h3 class="employer-name"><a href="employer-details.html">BowThemes</a></h3>
-                                </div>
-                            </div>
-                            <!-- Single Employer Item End -->
-                        </div>
-
-                        <div class="col-xl-2 col-lg-3 col-md-6 col-sm-6">
-                            <!-- Single Employer Item Start -->
-                            <div class="employer-item item-border-bottom">
-                                <span class="featured-employer-label">Featured</span>
-                                <div class="rating">
-                                    <span class="rating-point">5.0</span>
-                                </div>
-                                <div class="employer-image">
-                                    <img src="../assets/images/companies_logo/logo-9.jpg" alt="">
-                                </div>
-                                <div class="employer-info-top">
-                                    <span class="employer-location"><i class="lnr lnr-map-marker"></i> Dhaka,
-                                        Bangladesh</span>
-                                    <h3 class="employer-name"><a href="employer-details.html">HasThemes</a></h3>
-                                </div>
-                            </div>
-                            <!-- Single Employer Item End -->
-                        </div>
-
-                        <div class="col-xl-2 col-lg-3 col-md-6 col-sm-6">
-                            <!-- Single Employer Item Start -->
-                            <div class="employer-item item-border-bottom">
-                                <div class="rating">
-                                    <span class="rating-point">4.9</span>
-                                </div>
-                                <div class="employer-image">
-                                    <img src="../assets/images/companies_logo/logo-10.jpg" alt="">
-                                </div>
-                                <div class="employer-info-top">
-                                    <span class="employer-location"><i class="lnr lnr-map-marker"></i> Hanoi, Hà
-                                        Nội</span>
-                                    <h3 class="employer-name"><a href="employer-details.html">HasTech</a></h3>
+                                    <h3 class="employer-name"><a :href="'/jobs-details/'+item.id">{{ item.job_name }}</a></h3>
                                 </div>
                             </div>
                             <!-- Single Employer Item End -->
@@ -785,7 +651,7 @@ import Navbar from './Navbar.vue';
             <!-- Placed js at the end of the document so the pages load faster -->
         </div>
     </div>
-    <Footer/>
+    <Footer />
 </template>
 
 <!-- <style scoped>

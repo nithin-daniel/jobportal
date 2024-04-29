@@ -39,6 +39,12 @@
                                         </div>
                                         <div class="col-12">
                                             <div class="single-input">
+                                                <input type="text" placeholder="Enter Your Full Name" name="email"
+                                                    id="name" required v-model="full_name">
+                                            </div>
+                                        </div>
+                                        <div class="col-12">
+                                            <div class="single-input">
                                                 <input type="email" placeholder="Your Email Address" name="email"
                                                     id="email" required v-model="email">
                                             </div>
@@ -131,6 +137,7 @@ const password2 = ref('')
 const designation = ref('')
 // const designation = ref(false);
 const profilePicref = ref(null);
+const full_name = ref('')
 
 const router = useRouter() // get a reference to our vue router
 const profilePic = (event) => {
@@ -150,6 +157,7 @@ const register = () => {
                 console.log(snapshot);
             })
             const docRef = await addDoc(collection(dbnew, "users"), {
+                full_name:full_name.value,
                 user: data.user.uid,
                 email: email.value,
                 designation: designation.value ? 'employer' : 'company',
