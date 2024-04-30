@@ -2,7 +2,7 @@
 import Navbar from './Navbar.vue';
 import Footer from './Footer.vue';
 import { getFirestore } from 'firebase/firestore'
-import { collection, getDocs, addDoc, query, where, limit, doc, getDoc, updateDoc } from "firebase/firestore";
+import { collection, getDocs, addDoc, query, where, limit, doc, getDoc, updateDoc, arrayUnion } from "firebase/firestore";
 import axios from 'axios';
 
 import { StripeElements, StripeElement } from 'vue-stripe-js'
@@ -11,33 +11,56 @@ import { loadStripe } from '@stripe/stripe-js'
 import { ref, defineComponent, onBeforeMount } from 'vue';
 const dateandtime = ref('')
 
+const book = async () => {
+    const db = getFirestore();
+    // const docRef = await addDoc(collection(db, "booking"), {
+    //     id: uuidv4(),
+    //     name: localStorage.name,
+    //     user: localStorage.user_id,
+    //     booked_user: [],
+    //     email: localStorage.user_email,
+    //     time: dateandtime.value
+    // })
+
+    const docRef = await addDoc(collection(db, "booking"), {
+        id: uuidv4(),
+        name: 'localStorage.name',
+        user: 'localStorage.user_id',
+        // booked_user: [],
+        email: 'localStorage.user_email',
+        time: 'dateandtime.value'
+    })
+
+}
+
 export default {
 
-    components: {
-        StripeElements,
-        StripeElement,
-        Navbar,
-        Footer
-    },
-    setup() {
-    },
+    // components: {
+    //     StripeElements,
+    //     StripeElement,
+    //     Navbar,
+    //     Footer
+    // },
+    // setup() {
+    // },
 
 
-    data() {
-        this.publishableKey = ""
-        return {
-            jobs: [],
-            loading: false,
-            lineItems: [
-                {
-                    price: '', // The id of the one-time price you created in your Stripe dashboard
-                    quantity: 1,
-                },
-            ],
-            successURL: '/success',
-            cancelURL: '/failed',
-        };
-    },
+    // data() {
+    // //     // this.publishableKey = ""
+    // //     return {
+    // //         dateandtime: '',
+    //     jobs: [],
+    // //         loading: false,
+    // //         lineItems: [
+    // //             {
+    // //                 price: '', // The id of the one-time price you created in your Stripe dashboard
+    // //                 quantity: 1,
+    // //             },
+    // //         ],
+    // //         successURL: '/success',
+    // //         cancelURL: '/failed',
+    // },
+    // },
     created() {
         const id = this.$route.params.id;
         this.getprofile(id)
@@ -52,46 +75,48 @@ export default {
                 this.jobs.push(doc.data());
             });
         },
-        submit() {
-            // You will be redirected to Stripe's secure checkout page
-            console.log(this.$refs.checkoutRef.redirectToCheckout());
-        },
-        async handleCheckout() {
-            const stripePromise = loadStripe('');
-            const stripe = await stripePromise;
-            const { error } = await stripe.redirectToCheckout({
-                // payment_method_types: ['wechat_pay'],
-                // payment_method_options: {
-                //     wechat_pay: {
-                //         client: 'web',
-                //     },
-                // },
-                lineItems: [{ price: '', quantity: 1 }],
-                mode: 'payment',
-                successUrl: 'https://yourwebsite.com/success',
-                cancelUrl: 'https://yourwebsite.com/canceled',
-            });
-            if (error) {
-                console.error(error);
-            }
-        },
-        async book() {
-            const docRef = await addDoc(collection(db, "booking"), {
-                id: uuidv4(),
-                name: localStorage.name,
-                user: localStorage.user_id,
-                booked_user: [],
-                email: localStorage.user_email,
-                time: dateandtime.value
-            })
+        // async book (){
+        //     const docRef = await addDoc(collection(db, "booking"), {
+        //         id: uuidv4(),
+        //         name: localStorage.name,
+        //         user: localStorage.user_id,
+        //         booked_user: [],
+        //         email: localStorage.user_email,
+        //         time: dateandtime.value
+        //     })
+        //     console.log(docRef.id);
 
-            const updatedData = {
-                booked_user: arrayUnion(localStorage.user_id)
-            };
-            await updateDoc(docRef, updatedData);
-            router.push('/');
+        //     const updatedData = {
+        //         booked_user: arrayUnion(localStorage.user_id)
+        //     };
+        //     await updateDoc(docRef, updatedData);
+        //     router.push('/');
 
-        }
+        // },
+        // submit() {
+        //     // You will be redirected to Stripe's secure checkout page
+        //     console.log(this.$refs.checkoutRef.redirectToCheckout());
+        // },
+        // async handleCheckout() {
+        //     const stripePromise = loadStripe('');
+        //     const stripe = await stripePromise;
+        //     const { error } = await stripe.redirectToCheckout({
+        //         // payment_method_types: ['wechat_pay'],
+        //         // payment_method_options: {
+        //         //     wechat_pay: {
+        //         //         client: 'web',
+        //         //     },
+        //         // },
+        //         lineItems: [{ price: '', quantity: 1 }],
+        //         mode: 'payment',
+        //         successUrl: 'https://yourwebsite.com/success',
+        //         cancelUrl: 'https://yourwebsite.com/canceled',
+        //     });
+        //     if (error) {
+        //         console.error(error);
+        //     }
+        // },
+
 
     }
 

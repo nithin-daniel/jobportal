@@ -130,7 +130,7 @@ import * as firebase from '../../firebase/firebase.js'
 import { getDatabase, ref as reff, set } from "firebase/database";
 import { getFirestore } from 'firebase/firestore'
 // import { getStorage, ref as reff } from "firebase/storage";
-import { getStorage, ref as storeref, uploadBytes } from 'firebase/storage'
+import { getStorage, ref as storeref, uploadBytes } from 'firebase/storage' 
 
 const email = ref('')
 const password2 = ref('')
