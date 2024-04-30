@@ -12,19 +12,45 @@ export default {
     },
     data() {
         return {
-            arr: []
+            worksArr: [],
+            bookingArr: []
         }
     },
-    created() {
+    mounted() {
         this.getprofile();
     },
     methods: {
+        checkStatus(item) {
+            let status = true;
+            this.bookingArr.forEach((booking) => {
+                if (booking.work === item.id) {
+                    status = false;
+                }
+            });
+            return status;
+        },
         async getprofile() {
             const db = getFirestore();
-            const q = query(collection(db, "works"));
-            const querySnapshot = await getDocs(query(q));
-            querySnapshot.forEach((doc) => {
-                this.arr.push(doc.data());
+
+            const worksQuery = query(collection(db, "works"));
+            const worksSnapshot = await getDocs(query(worksQuery));
+            worksSnapshot.forEach((doc) => {
+                this.worksArr.push(doc.data());
+            });
+
+            const bookingQuery = query(collection(db, "booking"));
+            const bookingSnapshot = await getDocs(query(bookingQuery));
+            bookingSnapshot.forEach((doc) => {
+                // this.bookingArr.push(doc.data());
+
+                if (doc.data().user === localStorage.getItem('user_id')) {
+                    this.bookingArr.push(doc.data());
+                }
+            });
+
+            console.log({
+                works: this.worksArr,
+                booking: this.bookingArr
             });
         }
     }
@@ -89,72 +115,84 @@ export default {
                                     </form>
                                 </div>
                             </div>
-                            <div class="form-left">
-                                <!-- <div class="sort-by">
-                                        <form action="#">
-                                            <label class="text-sortby">Sort by:</label>
-                                            <select class="nice-select">
-                                                <option value="1">Title</option>
-                                                <option value="2">Date</option>
-                                                <option value="3">Salary</option>
-                                            </select>
-                                        </form>
-                                    </div> -->
-                            </div>
                         </div>
                     </div>
                     <div class="tab-content">
                         <div id="list" class="tab-pane fade show active">
                             <div class="row">
-                                <div class="col-lg-12 mb-20" v-for="item in arr">
+
+
+
+                                <div class="col-lg-12 mb-20" v-for="item in worksArr">
                                     <!-- Single Job Start  -->
-                                    <div class="single-job style-two">
-                                        <div class="info-top">
-                                            <!-- <div class="job-image">
-                                                <a href="job-details.html">
-                                                    <img src="../assets/images/companies_logo/logo-100/logo1.jpg"
-                                                        alt="logo">
-                                                </a>
-                                            </div> -->
-                                            <div class="job-info">
-                                                <div class="job-info-inner">
-                                                    <div class="job-info-top">
-                                                        <div class="saveJob for-listing">
-                                                            <!-- <span class="featured-label">featured</span> -->
-                                                            <!-- <a class="job-type-label ml-20 mr-20">Full Time</a> -->
-                                                            <div v-if="item.job_type === 'household'">
-                                                                <a class="job-type-label partTime ml-20 mr-20">House
-                                                                    Hold</a>
+                                    <div class="single-job style-two" :style="{ 'pointer-events': checkStatus(item) ? 'auto' : 'none', 'opacity': checkStatus(item) ? '1' : '0.5', 'cursor': checkStatus(item) ? 'pointer' : 'not-allowed' }">
+                                        <a :href="'/job-details/' + item.id" style="width: 100%;">
+                                            <div class="info-top">
+                                                <!-- <div class="job-image">
+                                                    <a href="job-details.html">
+                                                        <img src="../assets/images/companies_logo/logo-100/logo1.jpg"
+                                                            alt="logo">
+                                                    </a>
+                                                </div> -->
+                                                <div class="job-info">
+                                                    <div class="job-info-inner">
+                                                        <div class="job-info-top">
+                                                            <div class="saveJob for-listing">
+                                                                <!-- <span class="featured-label">featured</span> -->
+                                                                <!-- <a class="job-type-label ml-20 mr-20">Full Time</a> -->
+                                                                <div v-if="item.job_type === 'household'">
+                                                                    <a class="job-type-label partTime ml-20 mr-20">House
+                                                                        Hold</a>
+                                                                </div>
+                                                                <div v-else>
+                                                                    <a class="job-type-label partTime ml-20 mr-20">Part
+                                                                        Time</a>
+                                                                </div>
+                                                                <a class="save-job" href="#quick-view-modal-container"
+                                                                    data-toggle="modal">
+                                                                    <!-- <i class="far fa-heart"></i> -->
+                                                                </a>
                                                             </div>
-                                                            <div v-else>
-                                                                <a class="job-type-label partTime ml-20 mr-20">Part
-                                                                    Time</a>
+                                                            <div class="title-name">
+                                                                <h3 class="job-title">
+                                                                    <!-- <a href="/jobs-details">{{ item.job_name }}</a> -->
+                                                                    <a :href="'/job-details/' + item.id">{{ item.job_name
+                                                                        }}</a>
+                                                                </h3>
+                                                                <div class="employer-name">
+                                                                    <a href="job-details.html">{{ item.name }}</a>
+                                                                </div>
                                                             </div>
-                                                            <a class="save-job" href="#quick-view-modal-container"
-                                                                data-toggle="modal">
-                                                                <!-- <i class="far fa-heart"></i> -->
-                                                            </a>
                                                         </div>
-                                                        <div class="title-name">
-                                                            <h3 class="job-title">
-                                                                <a href="/jobs-details">{{ item.job_name }}</a>
-                                                            </h3>
-                                                            <div class="employer-name">
-                                                                <a href="job-details.html">{{ item.name }}</a>
+                                                        <div class="job-skill-tag">
+    
+                                                            <div style="display: flex; justify-content: space-between;">
+                                                                <p>{{ item.skills }}</p>
+    
+                                                                <div>
+                                                                    <template v-if="checkStatus(item)">
+                                                                        <p
+                                                                            style="font-size: large; background-color: green; color: white; padding: 4px 12px;">
+                                                                            AVAILABLE</p>
+                                                                    </template>
+                                                                    <template v-if="!checkStatus(item)">
+                                                                        <p
+                                                                            style="font-size: large; background-color: red; color: white; padding: 4px 12px;">
+                                                                            BOOKED</p>
+                                                                    </template>
+                                                                </div>
                                                             </div>
+    
                                                         </div>
-                                                    </div>
-                                                    <div class="job-skill-tag">
-                                                        <a href="">{{ item.skills }}</a>
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
+                                        </a>
                                     </div>
                                     <!-- Single Job End -->
                                 </div>
 
-                                
+
 
 
                             </div>
