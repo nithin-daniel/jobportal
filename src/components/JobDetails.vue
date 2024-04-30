@@ -9,8 +9,8 @@ import { StripeElements, StripeElement } from 'vue-stripe-js'
 import { loadStripe } from '@stripe/stripe-js'
 // import { createCheckoutSession } from '@/api/stripe'; // Replace with your API call to create a Checkout session
 import { ref, defineComponent, onBeforeMount } from 'vue';
-const dateandtime = ref('')
 import { v4 as uuidv4 } from 'uuid';
+
 
 export default {
 
@@ -25,8 +25,8 @@ export default {
     data() {
         return {
             publishableKey: "",
-            dateandtime: '',
-            jobs: [],
+            dateandtime: null,
+            job: {},
             loading: false,
             lineItems: [
                 {
@@ -50,12 +50,57 @@ export default {
     methods: {
         async getprofile(id) {
             this.db = getFirestore();
-            // const jobs = [];
             const q = query(collection(this.db, "works"));
             const querySnapshot = await getDocs(query(q));
             querySnapshot.forEach((doc) => {
-                this.jobs.push(doc.data());
+                if (doc.data().id == id) {
+                    this.job = doc.data();
+                }
             });
+            console.log(this.job);
+        },
+
+        async sendEmail() {
+            console.log("Sending Email...");
+
+            emailjs.init({
+                publicKey: 'SLi4gU7PS7DYBM_u1',
+                blockHeadless: true,
+                limitRate: {
+                    id: 'app',
+                    throttle: 10000,
+                },
+            });
+
+            if(this.job.job_type == "household") {
+
+                [this.job.email, localStorage.user_email].forEach(async (email) => {
+                    emailjs.send("service_fnwr405", "template_u839qq8", {
+                        to_name: email,
+                        from_name: "WorkEase",
+                        message: "You have a new booking request for " + this.job.job_name + " on " + this.dateandtime + ". Please check your dashboard for more details.",                
+                    })
+                    .then((response) => {
+                        console.log("SUCCESS!", response.status, response.text);
+                    }).catch((error) => {
+                        console.log("FAILED...", error);
+                    });
+                });
+                
+            } else {
+
+                emailjs.send("service_fnwr405", "template_u839qq8", {
+                    to_name: this.job.email,
+                    from_name: "WorkEase",
+                    message: "You have a new booking request for " + this.job.job_name + " on " + this.dateandtime + ". Please check your dashboard for more details.",
+                })
+                .then((response) => {
+                    console.log("SUCCESS!", response.status, response.text);
+                }).catch((error) => {
+                    console.log("FAILED...", error);
+                });
+                
+            }
         },
 
         async book() {
@@ -68,7 +113,7 @@ export default {
                 user: localStorage.user_id,
                 booked_user: [],
                 email: localStorage.user_email,
-                time: dateandtime.value
+                time: this.dateandtime,
             })
             console.log(docRef.id);
 
@@ -76,6 +121,9 @@ export default {
                 booked_user: arrayUnion(localStorage.user_id)
             };
             await updateDoc(docRef, updatedData);
+
+            await this.sendEmail();
+
             // window.location.href = '/';
         },
 
@@ -111,7 +159,7 @@ export default {
 <template>
     <Navbar />
 
-    <div v-for="job in jobs">
+    <!-- <div v-for="job in jobs"> -->
         <div class="breadcrumb-section section bg_color--5 pt-100 pt-sm-50 pt-xs-40 pb-60 pb-sm-50 pb-xs-40">
             <div class="container">
                 <div class="row">
@@ -202,16 +250,14 @@ export default {
                                         
                                         <!-- <button type="button" @click="pay">Pay</button> -->
 
-                                        <form action="">
-                                            <label for="dateandtime">Date & Time</label>
-                                            <br>
-                                            <input type="datetime-local" id="dateandtime" name="dateandtime"
-                                                v-model="dateandtime" required>
-                                            <br>
-                                            <br>
-                                            <button class="ht-btn text-center" @click="book">Book Now <i
-                                                    class="ml-10 mr-0 fa fa-paper-plane"></i></button>
-                                        </form>
+                                        <label for="dateandtime">Date & Time</label>
+                                        <br>
+                                        <input type="datetime-local" v-model="dateandtime" required>
+                                        <br>
+                                        <br>
+                                        <button class="ht-btn text-center" :disabled="!dateandtime" :class="{ 'ht-btn--disabled': !dateandtime }" @click="book">Book Now
+                                            <i class="ml-10 mr-0 fa fa-paper-plane"></i>
+                                        </button>
                                     </div>
                                 </div>
                             </div>
@@ -234,9 +280,6 @@ export default {
 
                                 <p>{{ job.jobdescription }}</p>
 
-
-
-
                             </div>
                         </div>
 
@@ -246,8 +289,16 @@ export default {
             </div>
         </div>
         <!-- Job Details Section End -->
-    </div>
+    <!-- </div> -->
 
     <Footer />
 
 </template>
+
+
+<style scoped>
+.ht-btn--disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+</style>
