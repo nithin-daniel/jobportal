@@ -137,7 +137,8 @@ export default {
                                                         </div>
                                                         <div class="title-name">
                                                             <h3 class="job-title">
-                                                                <a href="/jobs-details">{{ item.job_name }}</a>
+                                                                <!-- <a href="/jobs-details">{{ item.job_name }}</a> -->
+                                                                <a :href="'/job-details/' + item.id">{{ item.job_name }}</a>
                                                             </h3>
                                                             <div class="employer-name">
                                                                 <a href="job-details.html">{{ item.name }}</a>

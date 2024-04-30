@@ -10,112 +10,94 @@ import { loadStripe } from '@stripe/stripe-js'
 // import { createCheckoutSession } from '@/api/stripe'; // Replace with your API call to create a Checkout session
 import { ref, defineComponent, onBeforeMount } from 'vue';
 const dateandtime = ref('')
-
-const book = async () => {
-    const db = getFirestore();
-    // const docRef = await addDoc(collection(db, "booking"), {
-    //     id: uuidv4(),
-    //     name: localStorage.name,
-    //     user: localStorage.user_id,
-    //     booked_user: [],
-    //     email: localStorage.user_email,
-    //     time: dateandtime.value
-    // })
-
-    const docRef = await addDoc(collection(db, "booking"), {
-        id: uuidv4(),
-        name: 'localStorage.name',
-        user: 'localStorage.user_id',
-        // booked_user: [],
-        email: 'localStorage.user_email',
-        time: 'dateandtime.value'
-    })
-
-}
+import { v4 as uuidv4 } from 'uuid';
 
 export default {
 
-    // components: {
-    //     StripeElements,
-    //     StripeElement,
-    //     Navbar,
-    //     Footer
-    // },
-    // setup() {
-    // },
+    components: {
+        StripeElements,
+        StripeElement,
+        Navbar,
+        Footer
+    },
 
 
-    // data() {
-    // //     // this.publishableKey = ""
-    // //     return {
-    // //         dateandtime: '',
-    //     jobs: [],
-    // //         loading: false,
-    // //         lineItems: [
-    // //             {
-    // //                 price: '', // The id of the one-time price you created in your Stripe dashboard
-    // //                 quantity: 1,
-    // //             },
-    // //         ],
-    // //         successURL: '/success',
-    // //         cancelURL: '/failed',
-    // },
-    // },
+    data() {
+        return {
+            publishableKey: "",
+            dateandtime: '',
+            jobs: [],
+            loading: false,
+            lineItems: [
+                {
+                    price: '', // The id of the one-time price you created in your Stripe dashboard
+                    quantity: 1,
+                },
+            ],
+            successURL: '/success',
+            cancelURL: '/failed',
+            db: null,
+        }
+    },
+
+
     created() {
         const id = this.$route.params.id;
         this.getprofile(id)
     },
+
+
     methods: {
         async getprofile(id) {
-            const db = getFirestore();
+            this.db = getFirestore();
             // const jobs = [];
-            const q = query(collection(db, "works"));
+            const q = query(collection(this.db, "works"));
             const querySnapshot = await getDocs(query(q));
             querySnapshot.forEach((doc) => {
                 this.jobs.push(doc.data());
             });
         },
-        // async book (){
-        //     const docRef = await addDoc(collection(db, "booking"), {
-        //         id: uuidv4(),
-        //         name: localStorage.name,
-        //         user: localStorage.user_id,
-        //         booked_user: [],
-        //         email: localStorage.user_email,
-        //         time: dateandtime.value
-        //     })
-        //     console.log(docRef.id);
 
-        //     const updatedData = {
-        //         booked_user: arrayUnion(localStorage.user_id)
-        //     };
-        //     await updateDoc(docRef, updatedData);
-        //     router.push('/');
+        async book() {
 
-        // },
-        // submit() {
-        //     // You will be redirected to Stripe's secure checkout page
-        //     console.log(this.$refs.checkoutRef.redirectToCheckout());
-        // },
-        // async handleCheckout() {
-        //     const stripePromise = loadStripe('');
-        //     const stripe = await stripePromise;
-        //     const { error } = await stripe.redirectToCheckout({
-        //         // payment_method_types: ['wechat_pay'],
-        //         // payment_method_options: {
-        //         //     wechat_pay: {
-        //         //         client: 'web',
-        //         //     },
-        //         // },
-        //         lineItems: [{ price: '', quantity: 1 }],
-        //         mode: 'payment',
-        //         successUrl: 'https://yourwebsite.com/success',
-        //         cancelUrl: 'https://yourwebsite.com/canceled',
-        //     });
-        //     if (error) {
-        //         console.error(error);
-        //     }
-        // },
+            console.log("Test Name", localStorage);
+
+            const docRef = await addDoc(collection(this.db, "booking"), {
+                id: uuidv4(),
+                name: localStorage.name,
+                user: localStorage.user_id,
+                booked_user: [],
+                email: localStorage.user_email,
+                time: dateandtime.value
+            })
+            console.log(docRef.id);
+
+            const updatedData = {
+                booked_user: arrayUnion(localStorage.user_id)
+            };
+            await updateDoc(docRef, updatedData);
+            // window.location.href = '/';
+        },
+
+        async handleCheckout() {
+            const stripePromise = loadStripe('');
+            const stripe = await stripePromise;
+            const { error } = await stripe.redirectToCheckout({
+                payment_method_types: ['wechat_pay'],
+                payment_method_options: {
+                    wechat_pay: {
+                        client: 'web',
+                    },
+                },
+                lineItems: [{ price: '', quantity: 1 }],
+                mode: 'payment',
+                successUrl: '/success',
+                cancelUrl: '/canceled',
+            });
+            if (error) {
+                console.error(error);
+            }
+        },
 
 
     }
@@ -128,6 +110,7 @@ export default {
 
 <template>
     <Navbar />
+
     <div v-for="job in jobs">
         <div class="breadcrumb-section section bg_color--5 pt-100 pt-sm-50 pt-xs-40 pb-60 pb-sm-50 pb-xs-40">
             <div class="container">
@@ -216,7 +199,9 @@ export default {
                                             :elements-options="elementsOptions">
                                             <StripeElement ref="card" :elements="elements" :options="cardOptions" />
                                         </StripeElements>
+                                        
                                         <!-- <button type="button" @click="pay">Pay</button> -->
+
                                         <form action="">
                                             <label for="dateandtime">Date & Time</label>
                                             <br>
@@ -262,6 +247,7 @@ export default {
         </div>
         <!-- Job Details Section End -->
     </div>
+
     <Footer />
 
 </template>

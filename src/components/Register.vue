@@ -161,7 +161,7 @@ const register = () => {
                 user: data.user.uid,
                 email: email.value,
                 designation: designation.value ? 'employer' : 'company',
-                profile_url: `https://firebasestorage.googleapis.com/v0/b/jobportal-vuejs.appspot.com/o/images%2F${profilePicref.value.name}?alt=media&token=4b0f14f1-24bf-4f40-acb1-79a38534757e`
+                profile_url: `https://firebasestorage.googleapis.com/v0/b/jobportal-vuejs.appspot.com/o/images%2F${profilePicref.value.name}?alt=media`
             });
             console.log("Document written with ID: ", docRef.id);
 
