@@ -2,37 +2,35 @@
 import Navbar from './Navbar.vue';
 import Footer from './Footer.vue';
 import { getFirestore } from 'firebase/firestore'
-import { collection, getDocs, addDoc, query, where, limit, doc, getDoc } from "firebase/firestore";
+import { collection, getDocs, addDoc, query, where, limit, doc, getDoc, updateDoc } from "firebase/firestore";
 import axios from 'axios';
 
 import { StripeElements, StripeElement } from 'vue-stripe-js'
 import { loadStripe } from '@stripe/stripe-js'
 // import { createCheckoutSession } from '@/api/stripe'; // Replace with your API call to create a Checkout session
 import { ref, defineComponent, onBeforeMount } from 'vue';
+const dateandtime = ref('')
 
 export default {
-    name: 'CardOnly',
+
     components: {
         StripeElements,
         StripeElement,
+        Navbar,
+        Footer
     },
     setup() {
-
-
-
-
-
     },
 
 
     data() {
-        this.publishableKey = "pk_test_51PAy13SHYUEBmRXj310th0EXvuUZhI83odEX0uVMkgIXFWehZyjnOtc02aTDUpWruFkPeJ79BT3xnb5z1rkgyaYX001s0aMCJG"
+        this.publishableKey = ""
         return {
             jobs: [],
             loading: false,
             lineItems: [
                 {
-                    price: 'price_1PAyD3SHYUEBmRXjmFeiZ1aN', // The id of the one-time price you created in your Stripe dashboard
+                    price: '', // The id of the one-time price you created in your Stripe dashboard
                     quantity: 1,
                 },
             ],
@@ -77,6 +75,23 @@ export default {
                 console.error(error);
             }
         },
+        async book() {
+            const docRef = await addDoc(collection(db, "booking"), {
+                id: uuidv4(),
+                name: localStorage.name,
+                user: localStorage.user_id,
+                booked_user: [],
+                email: localStorage.user_email,
+                time: dateandtime.value
+            })
+
+            const updatedData = {
+                booked_user: arrayUnion(localStorage.user_id)
+            };
+            await updateDoc(docRef, updatedData);
+            router.push('/');
+
+        }
 
     }
 
@@ -89,7 +104,7 @@ export default {
 <template>
     <Navbar />
     <div v-for="job in jobs">
-        <div class="breadcrumb-section section bg_color--5 pt-60 pt-sm-50 pt-xs-40 pb-60 pb-sm-50 pb-xs-40">
+        <div class="breadcrumb-section section bg_color--5 pt-100 pt-sm-50 pt-xs-40 pb-60 pb-sm-50 pb-xs-40">
             <div class="container">
                 <div class="row">
                     <div class="col-12">
@@ -176,10 +191,17 @@ export default {
                                             :elements-options="elementsOptions">
                                             <StripeElement ref="card" :elements="elements" :options="cardOptions" />
                                         </StripeElements>
-                                        <button type="button" @click="pay">Pay</button>
-
-                                        <button class="ht-btn text-center" @click="handleCheckout">Book Now <i
-                                                class="ml-10 mr-0 fa fa-paper-plane"></i></button>
+                                        <!-- <button type="button" @click="pay">Pay</button> -->
+                                        <form action="">
+                                            <label for="dateandtime">Date & Time</label>
+                                            <br>
+                                            <input type="datetime-local" id="dateandtime" name="dateandtime"
+                                                v-model="dateandtime" required>
+                                            <br>
+                                            <br>
+                                            <button class="ht-btn text-center" @click="book">Book Now <i
+                                                    class="ml-10 mr-0 fa fa-paper-plane"></i></button>
+                                        </form>
                                     </div>
                                 </div>
                             </div>
