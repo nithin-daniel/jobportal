@@ -13,7 +13,8 @@ export default {
     },
     data() {
         return {
-            arr: []
+            arr: [],
+            showSearch: false
         }
     },
     created() {
@@ -102,42 +103,48 @@ export default {
                                     <h3 class="sub-title">For Professionals</h3>
                                     <p>Jobs & Job search. Find jobs in global. Executive jobs & work. Employment</p>
 
-                                    <div class="job-search-wrap mt-90 mt-md-70 mt-sm-50 mt-xs-30">
-                                        <div class="job-search-form">
-                                            <form action="#">
-                                                <div class="row row-5">
-                                                    <div class="col-lg-4 col-md-6 col-sm-6 col-12">
-                                                        <!-- Single Field Item Start  -->
-                                                        <div class="single-field-item">
-                                                            <i class="lnr lnr-magnifier"></i>
-                                                            <input placeholder="What jobs you want?" name="keyword"
-                                                                type="text">
-                                                        </div>
-                                                        <!-- Single Field Item End  -->
-                                                    </div>
 
-                                                    <div class="col-lg-3 col-md-6 col-sm-6 col-12">
-                                                        <!-- Single Field Item Start  -->
-                                                        <div class="single-field-item">
-                                                            <i class="lnr lnr-map-marker"></i>
-                                                            <input class="input-field input-field-location"
-                                                                placeholder="Location" name="location" type="text">
-                                                            <span class="btn-action-location">
-                                                                <i class="far fa-dot-circle"></i>
-                                                            </span>
+
+                                    <template v-if="showSearch">
+                                        <div class="job-search-wrap mt-90 mt-md-70 mt-sm-50 mt-xs-30">
+                                            <div class="job-search-form">
+                                                <form action="#">
+                                                    <div class="row row-5">
+                                                        <div class="col-lg-4 col-md-6 col-sm-6 col-12">
+                                                            <!-- Single Field Item Start  -->
+                                                            <div class="single-field-item">
+                                                                <i class="lnr lnr-magnifier"></i>
+                                                                <input placeholder="What jobs you want?" name="keyword"
+                                                                    type="text">
+                                                            </div>
+                                                            <!-- Single Field Item End  -->
                                                         </div>
-                                                        <!-- Single Field Item End  -->
-                                                    </div>
-                                                    <div class="col-lg-2 col-md-6 col-sm-6 col-12">
-                                                        <div class="submit-btn">
-                                                            <button class="ht-btn" type="submit"> Search</button>
+
+                                                        <div class="col-lg-3 col-md-6 col-sm-6 col-12">
+                                                            <!-- Single Field Item Start  -->
+                                                            <div class="single-field-item">
+                                                                <i class="lnr lnr-map-marker"></i>
+                                                                <input class="input-field input-field-location"
+                                                                    placeholder="Location" name="location" type="text">
+                                                                <span class="btn-action-location">
+                                                                    <i class="far fa-dot-circle"></i>
+                                                                </span>
+                                                            </div>
+                                                            <!-- Single Field Item End  -->
+                                                        </div>
+                                                        <div class="col-lg-2 col-md-6 col-sm-6 col-12">
+                                                            <div class="submit-btn">
+                                                                <button class="ht-btn" type="submit"> Search</button>
+                                                            </div>
                                                         </div>
                                                     </div>
-                                                </div>
-                                            </form>
+                                                </form>
+                                            </div>
+
                                         </div>
+                                    </template>
 
-                                    </div>
+
 
                                 </div>
                                 <!--Hero Content end-->
@@ -276,9 +283,9 @@ export default {
                                     </span>
                                 </div>
                                 <div class="testimonial-comment">
-                                    <p>"I am so pleased with this product. Jopota Recruitment has completely surpassed
+                                    <p>"I am so pleased with this product. WorkEase Recruitment has completely surpassed
                                         our
-                                        expectations. If you aren't sure, always go for Jopota Recruitment. Jopota
+                                        expectations. If you aren't sure, always go for WorkEase Recruitment. WorkEase
                                         Recruitment is the real deal!"</p>
                                 </div>
                             </div>
@@ -306,9 +313,9 @@ export default {
                                     </span>
                                 </div>
                                 <div class="testimonial-comment">
-                                    <p>"I am so pleased with this product. Jopota Recruitment has completely surpassed
+                                    <p>"I am so pleased with this product. WorkEase Recruitment has completely surpassed
                                         our
-                                        expectations. If you aren't sure, always go for Jopota Recruitment. Jopota
+                                        expectations. If you aren't sure, always go for WorkEase Recruitment. WorkEase
                                         Recruitment is the real deal!"</p>
                                 </div>
                             </div>

@@ -19,7 +19,7 @@
                             </div>
                             <div class="email">
                                 <i class="lnr lnr-envelope"></i>
-                                <span>jopota@recruitment.com</span>
+                                <span>test@test.com</span>
                             </div>
                             <div class="phone theme-color">(+1) 000 987-1234</div>
                             <div class="footer-widget-image d-flex mt-35">
@@ -80,7 +80,7 @@
                 <div class="row g-0 st-border pt-35 pb-35 align-items-center justify-content-between">
                     <div class="col-lg-6 col-md-6">
                         <div class="copyright">
-                            <p>&copy;2024 <a href="https://hasthemes.com/">Jetapo</a>. All rights reserved.</p>
+                            <p>&copy;2024 <a href="/">WorkEase</a>. All rights reserved.</p>
                         </div>
                     </div>
                     <div class="col-lg-6 col-md-6">

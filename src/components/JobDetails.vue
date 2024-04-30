@@ -123,9 +123,9 @@ export default {
             };
             await updateDoc(docRef, updatedData);
 
-            // await this.sendEmail();
+            await this.sendEmail();
 
-            // window.location.href = '/';
+            window.location.href = '/';
         },
 
         async handleCheckout() {
