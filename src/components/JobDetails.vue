@@ -3,13 +3,42 @@ import Navbar from './Navbar.vue';
 import Footer from './Footer.vue';
 import { getFirestore } from 'firebase/firestore'
 import { collection, getDocs, addDoc, query, where, limit, doc, getDoc } from "firebase/firestore";
+import axios from 'axios';
 
+import { StripeElements, StripeElement } from 'vue-stripe-js'
+import { loadStripe } from '@stripe/stripe-js'
+// import { createCheckoutSession } from '@/api/stripe'; // Replace with your API call to create a Checkout session
+import { ref, defineComponent, onBeforeMount } from 'vue';
 
 export default {
+    name: 'CardOnly',
+    components: {
+        StripeElements,
+        StripeElement,
+    },
+    setup() {
+
+
+
+
+
+    },
+
+
     data() {
+        this.publishableKey = "pk_test_51PAy13SHYUEBmRXj310th0EXvuUZhI83odEX0uVMkgIXFWehZyjnOtc02aTDUpWruFkPeJ79BT3xnb5z1rkgyaYX001s0aMCJG"
         return {
-            jobs: []
-        }
+            jobs: [],
+            loading: false,
+            lineItems: [
+                {
+                    price: 'price_1PAyD3SHYUEBmRXjmFeiZ1aN', // The id of the one-time price you created in your Stripe dashboard
+                    quantity: 1,
+                },
+            ],
+            successURL: '/success',
+            cancelURL: '/failed',
+        };
     },
     created() {
         const id = this.$route.params.id;
@@ -23,21 +52,49 @@ export default {
             const querySnapshot = await getDocs(query(q));
             querySnapshot.forEach((doc) => {
                 this.jobs.push(doc.data());
-                console.log(doc.data());
             });
-        }
+        },
+        submit() {
+            // You will be redirected to Stripe's secure checkout page
+            console.log(this.$refs.checkoutRef.redirectToCheckout());
+        },
+        async handleCheckout() {
+            const stripePromise = loadStripe('');
+            const stripe = await stripePromise;
+            const { error } = await stripe.redirectToCheckout({
+                // payment_method_types: ['wechat_pay'],
+                // payment_method_options: {
+                //     wechat_pay: {
+                //         client: 'web',
+                //     },
+                // },
+                lineItems: [{ price: '', quantity: 1 }],
+                mode: 'payment',
+                successUrl: 'https://yourwebsite.com/success',
+                cancelUrl: 'https://yourwebsite.com/canceled',
+            });
+            if (error) {
+                console.error(error);
+            }
+        },
+
     }
-};
+
+}
+
+
 </script>
+
+
 <template>
-    <Navbar/>
+    <Navbar />
     <div v-for="job in jobs">
         <div class="breadcrumb-section section bg_color--5 pt-60 pt-sm-50 pt-xs-40 pb-60 pb-sm-50 pb-xs-40">
             <div class="container">
                 <div class="row">
                     <div class="col-12">
                         <div class="page-breadcrumb-content">
-                     
+
                             <h1>{{ job.job_name }}</h1>
                         </div>
                     </div>
@@ -113,8 +170,16 @@ export default {
                             <div class="common-sidebar-widget sidebar-three">
                                 <div class="sidebar-job-apply">
                                     <div class="action-button">
-                                        <a class="ht-btn text-center" href="#">Book now <i
-                                                class="ml-10 mr-0 fa fa-paper-plane"></i></a>
+
+                                        <StripeElements v-if="stripeLoaded" v-slot="{ elements, instance }" ref="elms"
+                                            :stripe-key="stripeKey" :instance-options="instanceOptions"
+                                            :elements-options="elementsOptions">
+                                            <StripeElement ref="card" :elements="elements" :options="cardOptions" />
+                                        </StripeElements>
+                                        <button type="button" @click="pay">Pay</button>
+
+                                        <button class="ht-btn text-center" @click="handleCheckout">Book Now <i
+                                                class="ml-10 mr-0 fa fa-paper-plane"></i></button>
                                     </div>
                                 </div>
                             </div>
@@ -135,7 +200,7 @@ export default {
                             <div class="field-descriptions mb-60 mb-sm-30 mb-xs-30">
                                 <h3>Job Description</h3>
 
-                               <p>{{ job.jobdescription }}</p>
+                                <p>{{ job.jobdescription }}</p>
 
 
 
