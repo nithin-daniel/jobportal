@@ -54,7 +54,7 @@
                                 </p>
                                 <div class="newsletter-form">
                                     <form id="mc-form" class="mc-form">
-                                        <input type="email" placeholder="Enter Your email..." required="" name="EMAIL">
+                                        <input type="email" placeholder="Enter Your email..." name="EMAIL">
                                         <button class="ht-btn small-btn" type="submit" value="submit">Subscribe</button>
                                     </form>
                                 </div>

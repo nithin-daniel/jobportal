@@ -10,7 +10,9 @@
                             <!--Logo start-->
                             <div class="col-xl-2 col-lg-2 col-12">
                                 <div class="logo">
-                                    <a href="/"><img src="../assets/images/logo-white.png" alt=""></a>
+                                    <a href="/">
+                                        <h1 style="font-size: 1.75rem; font-weight: bold; color: white; text-decoration: none;">WorkEase</h1>
+                                    </a>
                                 </div>
                             </div>
                             <!--Logo end-->

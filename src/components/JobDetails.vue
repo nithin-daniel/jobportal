@@ -114,6 +114,7 @@ export default {
                 booked_user: [],
                 email: localStorage.user_email,
                 time: this.dateandtime,
+                work: this.job.id,
             })
             console.log(docRef.id);
 
@@ -122,7 +123,7 @@ export default {
             };
             await updateDoc(docRef, updatedData);
 
-            await this.sendEmail();
+            // await this.sendEmail();
 
             // window.location.href = '/';
         },
