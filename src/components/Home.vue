@@ -232,7 +232,7 @@ export default {
                                 <div class="employer-info-top">
                                     <span class="employer-location"><i class="lnr lnr-map-marker"></i> Beijing,
                                         Beijing</span>
-                                    <h3 class="employer-name"><a :href="'/jobs-details/'+item.id">{{ item.job_name }}</a></h3>
+                                    <h3 class="employer-name"><a :href="'/job-details/'+item.id">{{ item.job_name }}</a></h3>
                                 </div>
                             </div>
                             <!-- Single Employer Item End -->
